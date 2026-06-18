@@ -101,6 +101,45 @@
     <div class="bg-overlay"></div>
     <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-3 w-80" style="pointer-events: none;"></div>
 
+    <!-- ปุ่มกล่องของขวัญ (ลอยอยู่มุมซ้ายล่าง) -->
+    <div id="floatingGiftBox" class="fixed bottom-6 left-6 z-40 flex flex-col items-center cursor-pointer transform transition-transform hover:scale-110" onclick="openGiftModal()">
+        <span class="bg-red-500 text-white text-[11px] sm:text-xs font-bold px-3 py-1 rounded-full mb-1 animate-pulse shadow-md whitespace-nowrap">ลองจิ้มดู ✨</span>
+        <div class="bg-white p-3 sm:p-4 rounded-full shadow-2xl border-2 border-carrier-gold animate-bounce flex items-center justify-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-carrier-goldlight opacity-20"></div>
+            <i class="fa-solid fa-gift text-3xl sm:text-4xl text-carrier-blue relative z-10"></i>
+        </div>
+    </div>
+
+    <!-- Modal ตัวเลือกของขวัญ -->
+    <div id="giftModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity px-4">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl transform transition-transform scale-95 duration-300 relative" id="giftModalContent">
+            <!-- ปุ่มปิดมุมขวาบน -->
+            <button onclick="closeGiftModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 focus:outline-none">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            
+            <div class="text-center mb-6 mt-2">
+                <div class="inline-block bg-carrier-goldlight p-4 rounded-full mb-4 animate-float">
+                    <i class="fa-solid fa-gift text-4xl text-carrier-gold"></i>
+                </div>
+                <h3 class="text-xl sm:text-2xl font-extrabold text-carrier-dark">แอบกระซิบหน่อย!</h3>
+                <p class="text-sm text-gray-500 mt-2 font-medium">ถ้าเลือกได้ อยากให้เราแจกของรางวัลพิเศษอะไรเพิ่มเติมครับ?</p>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-3 sm:gap-4">
+                <button onclick="submitGiftChoice('เสื้อ')" class="flex flex-col items-center justify-center gap-3 p-4 sm:p-5 border-2 border-gray-100 rounded-2xl hover:border-carrier-blue hover:bg-carrier-light hover:shadow-md transition-all group focus:outline-none">
+                    <i class="fa-solid fa-shirt text-4xl text-gray-400 group-hover:text-carrier-blue transition-colors"></i>
+                    <span class="font-bold text-gray-700 group-hover:text-carrier-dark text-sm sm:text-base">เสื้อ</span>
+                </button>
+                <button onclick="submitGiftChoice('เครื่องมือช่าง')" class="flex flex-col items-center justify-center gap-3 p-4 sm:p-5 border-2 border-gray-100 rounded-2xl hover:border-carrier-blue hover:bg-carrier-light hover:shadow-md transition-all group focus:outline-none">
+                    <i class="fa-solid fa-toolbox text-4xl text-gray-400 group-hover:text-carrier-blue transition-colors"></i>
+                    <span class="font-bold text-gray-700 group-hover:text-carrier-dark text-sm sm:text-base">เครื่องมือช่าง</span>
+                </button>
+            </div>
+            <p class="text-[11px] text-center text-gray-400 mt-5">(การโหวตนี้ไม่มีผลต่อการลงทะเบียนหลักครับ)</p>
+        </div>
+    </div>
+
     <!-- Header Area -->
     <header class="relative z-10 pt-8 pb-6 flex flex-col items-center text-center px-4 overflow-hidden">
         
@@ -261,12 +300,12 @@
                                     <option value="" disabled selected>-- คลิกลงเพื่อเลือกรุ่นแอร์แคเรียร์ --</option>
                                     <option value="Tech S (NSAA)">Tech S (NSAA)</option>
                                     <option value="Tech V (NVAA)">Tech V (NVAA)</option>
-                                    <option value="Copper-Seal (TVDB)">Copper-Seal (TVDB)</option>
-                                    <option value="Copper-Ion (TVEB)">Copper-Ion (TVEB)</option>
-                                    <option value="X-inverter Plus (TVAB)">X-inverter Plus (TVAB)</option>
+                                    <option value="Copper SEAL (TVDB)">Copper-Seal (TVDB)</option>
+                                    <option value="Copper ION (TVEB)">Copper-Ion (TVEB)</option>
+                                    <option value="Xinverter Plus (TVAB)">X-inverter Plus (TVAB)</option>
                                     <option value="Discovery (TGF,BGF)">Discovery (TGF,BGF)</option>
-                                    <option value="X-Power Element (TGEV)">X-Power Element (TGEV)</option>
-                                    <option value="X-Power Elite (TGV)">X-Power Elite (TGV)</option>
+                                    <option value="XPower Element (TGEV)">X-Power Element (TGEV)</option>
+                                    <option value="XPower Elite (TGV)">X-Power Elite (TGV)</option>
                                 </select>
                                 <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
                                     <i class="fa-solid fa-chevron-down text-carrier-blue text-sm"></i>
@@ -361,7 +400,7 @@
     </main>
 
     <script>
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwXIslPI2UPJ2yrpY8XUyDCrp0yzUCnaUqV8HMUVYST7gaZimz7IDjvQyO48NgsyODu/exec';
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbziXLLVizC05Iq5KF93kyqO9hHs2sAFAbcPvpSz1dvPRvJwBzz9XHWCIlz0UAf8cP53/exec';
 
         const wcTeams = [
             { name: "กาตาร์", code: "qa" }, { name: "เกาหลีใต้", code: "kr" }, { name: "จอร์แดน", code: "jo" }, { name: "ซาอุดีอาระเบีย", code: "sa" }, { name: "ญี่ปุ่น", code: "jp" }, { name: "ออสเตรเลีย", code: "au" }, { name: "อิรัก", code: "iq" }, { name: "อิหร่าน", code: "ir" }, { name: "อุซเบกิสถาน", code: "uz" },
@@ -371,6 +410,56 @@
             { name: "แคนาดา", code: "ca" }, { name: "เม็กซิโก", code: "mx" }, { name: "สหรัฐอเมริกา", code: "us" }, { name: "คูราเซา", code: "cw" }, { name: "ปานามา", code: "pa" }, { name: "เฮติ", code: "ht" },
             { name: "นิวซีแลนด์", code: "nz" }
         ];
+
+        // --- Gift Vote Logic ---
+        function openGiftModal() {
+            const modal = document.getElementById('giftModal');
+            const content = document.getElementById('giftModalContent');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeGiftModal() {
+            const modal = document.getElementById('giftModal');
+            const content = document.getElementById('giftModalContent');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function submitGiftChoice(choice) {
+            closeGiftModal();
+            showToast("กำลังส่งข้อมูลการโหวต...", "info");
+            
+            const payload = new URLSearchParams();
+            payload.append('action', 'vote_gift');
+            payload.append('choice', choice);
+
+            fetch(APPS_SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: payload
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    showToast(`ขอบคุณที่โหวต "${choice}" ครับ! 🎉`, 'success');
+                    document.getElementById('floatingGiftBox').style.display = 'none'; // ซ่อนกล่องของขวัญ
+                } else {
+                    showToast("ไม่สามารถส่งข้อมูลได้ กรุณาลองใหม่", "error");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showToast("เกิดข้อผิดพลาดในการเชื่อมต่อ", "error");
+            });
+        }
+        // -----------------------
 
         const teamInput = document.getElementById('inputTeam');
         const teamSuggestions = document.getElementById('teamSuggestions');

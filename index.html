@@ -298,14 +298,14 @@
                                 </div>
                                 <select id="inputAC" required class="w-full pl-11 pr-10 py-3.5 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-carrier-blue focus:border-carrier-blue transition-shadow text-gray-800 appearance-none font-medium text-base shadow-sm cursor-pointer">
                                     <option value="" disabled selected>-- คลิกลงเพื่อเลือกรุ่นแอร์แคเรียร์ --</option>
-                                    <option value="Tech S (NSAA)">Tech S (NSAA)</option>
-                                    <option value="Tech V (NVAA)">Tech V (NVAA)</option>
-                                    <option value="Copper SEAL (TVDB)">Copper SEAL (TVDB)</option>
-                                    <option value="Copper ION (TVEB)">Copper ION (TVEB)</option>
-                                    <option value="Xinverter Plus (TVAB)">Xinverter Plus (TVAB)</option>
+                                    <option value="Tech S (NSAA)">TECH S (NSAA)</option>
+                                    <option value="Tech V (NVAA)">TECH V (NVAA)</option>
+                                    <option value="Copper-Seal (TVDB)">Copper SEAL (TVDB)</option>
+                                    <option value="Copper-Ion (TVEB)">Copper ION (TVEB)</option>
+                                    <option value="X-inverter Plus (TVAB)">Xinverter Plus (TVAB)</option>
                                     <option value="Discovery (TGF,BGF)">Discovery (TGF,BGF)</option>
-                                    <option value="XPower Element (TGEV)">XPower Element (TGEV)</option>
-                                    <option value="XPower Elite (TGV)">XPower Elite (TGV)</option>
+                                    <option value="X-Power Element (TGEV)">XPower Element (TGEV)</option>
+                                    <option value="X-Power Elite (TGV)">XPower Elite (TGV)</option>
                                 </select>
                                 <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
                                     <i class="fa-solid fa-chevron-down text-carrier-blue text-sm"></i>
@@ -362,6 +362,13 @@
                                     <p class="text-[11px] text-gray-500 uppercase tracking-wider font-bold mb-1">ชื่อ - นามสกุล</p>
                                     <p id="resultName" class="text-gray-800 font-bold text-xl">-</p>
                                 </div>
+                                
+                                <!-- เพิ่มส่วนแสดงที่อยู่ -->
+                                <div>
+                                    <p class="text-[11px] text-gray-500 uppercase tracking-wider font-bold mb-1">ที่อยู่สำหรับจัดส่ง / ติดตั้ง</p>
+                                    <p id="resultAddress" class="text-gray-800 font-medium text-sm leading-relaxed">-</p>
+                                </div>
+
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
                                         <p class="text-[11px] text-gray-500 uppercase tracking-wider font-bold mb-1">แอร์ที่ติดตั้ง</p>
@@ -590,6 +597,8 @@
                     resultBox.classList.remove('hidden');
                     
                     document.getElementById('resultName').innerText = userRecord.name;
+                    // อัปเดตข้อมูลที่อยู่
+                    document.getElementById('resultAddress').innerText = userRecord.address || '-';
                     document.getElementById('resultAC').innerHTML = `<i class="fa-solid fa-snowflake text-carrier-blue"></i> <span>${userRecord.ac}</span>`;
                     document.getElementById('resultTeam').innerHTML = `
                         <img src="https://flagcdn.com/w40/${teamCode}.png" class="w-10 h-6 rounded shadow-sm object-cover border border-gray-200" alt="flag">

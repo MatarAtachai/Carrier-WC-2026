@@ -25,17 +25,13 @@
                         'gradient-x': 'gradient-x 3s ease infinite',
                         'float': 'float 3s ease-in-out infinite',
                         'pulse-glow': 'pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-ball': 'bounce-ball 8s linear infinite',
+                        'bounce-ball-reverse': 'bounce-ball-reverse 10s linear infinite',
                     },
                     keyframes: {
                         'gradient-x': {
-                            '0%, 100%': {
-                                'background-size': '200% 200%',
-                                'background-position': 'left center'
-                            },
-                            '50%': {
-                                'background-size': '200% 200%',
-                                'background-position': 'right center'
-                            },
+                            '0%, 100%': { 'background-size': '200% 200%', 'background-position': 'left center' },
+                            '50%': { 'background-size': '200% 200%', 'background-position': 'right center' },
                         },
                         'float': {
                             '0%, 100%': { transform: 'translateY(0)' },
@@ -44,6 +40,20 @@
                         'pulse-glow': {
                             '0%, 100%': { opacity: 1, boxShadow: '0 0 0 0 rgba(255, 183, 0, 0.4)' },
                             '50%': { opacity: .9, boxShadow: '0 0 0 10px rgba(255, 183, 0, 0)' },
+                        },
+                        'bounce-ball': {
+                            '0%': { transform: 'translateX(-100px) rotate(0deg) translateY(0)' },
+                            '25%': { transform: 'translateX(30vw) rotate(90deg) translateY(-30px)' },
+                            '50%': { transform: 'translateX(60vw) rotate(180deg) translateY(0)' },
+                            '75%': { transform: 'translateX(90vw) rotate(270deg) translateY(-30px)' },
+                            '100%': { transform: 'translateX(120vw) rotate(360deg) translateY(0)' }
+                        },
+                        'bounce-ball-reverse': {
+                            '0%': { transform: 'translateX(120vw) rotate(360deg) translateY(0)' },
+                            '25%': { transform: 'translateX(90vw) rotate(270deg) translateY(20px)' },
+                            '50%': { transform: 'translateX(50vw) rotate(180deg) translateY(0)' },
+                            '75%': { transform: 'translateX(20vw) rotate(90deg) translateY(20px)' },
+                            '100%': { transform: 'translateX(-100px) rotate(0deg) translateY(0)' }
                         }
                     }
                 }
@@ -55,78 +65,73 @@
     <style>
         body { 
             font-family: 'Prompt', sans-serif; 
-            /* รูปภาพพื้นหลัง */
             background-image: url('https://img2.pic.in.th/Screenshot-2026-06-18-111559.png');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             background-repeat: no-repeat;
         }
-        /* ตัวทำพื้นหลังให้จางลง */
         .bg-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.88); /* สีขาวอมฟ้าโปร่งแสง จางๆ สบายตา */
-            z-index: -1; 
-            pointer-events: none;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            /* ปรับความโปร่งใสลงจาก 0.88 เป็น 0.70 เพื่อให้พื้นหลังดูเข้มขึ้นและเห็นชัดขึ้น */
+            background: rgba(255, 255, 255, 0.70); 
+            z-index: -1; pointer-events: none;
         }
         .nav-active { border-bottom-width: 3px; border-color: #005baa; color: #005baa; font-weight: 700; }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .loader { border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top: 3px solid #ffffff; width: 20px; height: 20px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .input-glow:focus { box-shadow: 0 0 0 4px rgba(255, 183, 0, 0.2); border-color: #ffb700; }
         
-        .loader {
-            border: 3px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top: 3px solid #ffffff;
-            width: 20px;
-            height: 20px;
-            -webkit-animation: spin 1s linear infinite;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* สไตล์กรอบเรืองแสงสำหรับอินพุตพิเศษ */
-        .input-glow:focus {
-            box-shadow: 0 0 0 4px rgba(255, 183, 0, 0.2);
-            border-color: #ffb700;
-        }
+        /* สร้างตัวลอยอยู่เหนือสุดสำหรับ Dropdown */
+        .dropdown-top { z-index: 100 !important; }
     </style>
 </head>
-<body class="text-gray-800 antialiased min-h-screen relative pb-12">
+<body class="text-gray-800 antialiased min-h-screen relative pb-12 overflow-x-hidden">
 
-    <!-- แผ่นกรองพื้นหลังให้อ่อนลง -->
     <div class="bg-overlay"></div>
-
-    <!-- Toast Notification Container -->
     <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-3 w-80" style="pointer-events: none;"></div>
 
     <!-- Header Area -->
-    <header class="relative z-10 pt-8 pb-6 flex flex-col items-center text-center px-4">
-        <!-- รูปภาพโลโก้แคมเปญ -->
-        <img src="https://img2.pic.in.th/final-Logo-CarrierCampaign-2025---Copy.md.png" alt="เพื่อนแท้ช่างแอร์ Carrier" class="h-auto w-full max-w-[22rem] mx-auto mb-4 drop-shadow-xl hover:scale-105 transition-transform duration-300">
+    <header class="relative z-10 pt-8 pb-6 flex flex-col items-center text-center px-4 overflow-hidden">
         
-        <!-- Banner โปรโมชันสุดพิเศษ (UI ใหม่) -->
-        <div class="w-full max-w-2xl mt-2 rounded-2xl bg-gradient-to-r from-carrier-dark via-carrier-blue to-carrier-dark p-[3px] shadow-2xl animate-gradient-x transform transition-all hover:-translate-y-1">
-            <div class="bg-white rounded-xl px-4 py-5 sm:px-6 relative overflow-hidden flex flex-col items-center">
+        <!-- แอนิเมชันลูกฟุตบอลวิ่งไปมา (เพิ่มจำนวนลูกบอล) -->
+        <i class="fa-solid fa-futbol absolute top-10 left-0 text-carrier-blue/20 text-5xl animate-bounce-ball z-0 hidden md:block" style="animation-duration: 9s;"></i>
+        <i class="fa-solid fa-futbol absolute top-32 left-0 text-carrier-dark/15 text-3xl animate-bounce-ball z-0 hidden md:block" style="animation-duration: 12s; animation-delay: 2s;"></i>
+        <i class="fa-solid fa-futbol absolute top-20 right-0 text-carrier-blue/25 text-6xl animate-bounce-ball-reverse z-0 hidden md:block" style="animation-duration: 14s; animation-delay: 1s;"></i>
+
+        <!-- รูปภาพโลโก้แคมเปญ -->
+        <img src="https://img2.pic.in.th/final-Logo-CarrierCampaign-2025---Copy.md.png" alt="เพื่อนแท้ช่างแอร์ Carrier" class="h-auto w-full max-w-[22rem] mx-auto mb-4 drop-shadow-xl hover:scale-105 transition-transform duration-300 relative z-10">
+        
+        <!-- Banner โปรโมชันสุดพิเศษ -->
+        <div class="w-full max-w-2xl mt-2 rounded-2xl bg-gradient-to-r from-carrier-dark via-carrier-blue to-carrier-dark p-[3px] shadow-2xl animate-gradient-x transform transition-all hover:-translate-y-1 relative z-10">
+            <div class="bg-white rounded-xl px-4 py-6 sm:px-8 relative overflow-hidden flex flex-col items-center">
                 <!-- ไอคอนลูกบอลตกแต่ง -->
-                <i class="fa-regular fa-futbol absolute -bottom-6 -right-4 text-7xl text-gray-100 transform -rotate-12 z-0"></i>
-                <i class="fa-solid fa-trophy absolute -top-4 -left-4 text-6xl text-carrier-goldlight/30 transform rotate-12 z-0"></i>
+                <i class="fa-solid fa-trophy absolute -top-4 -left-4 text-7xl text-carrier-goldlight/40 transform rotate-12 z-0"></i>
+                <i class="fa-solid fa-medal absolute -bottom-4 -right-4 text-7xl text-gray-50 transform -rotate-12 z-0"></i>
                 
-                <div class="relative z-10 text-center space-y-2">
-                    <div class="inline-block bg-carrier-gold text-carrier-dark text-xs sm:text-sm font-bold px-4 py-1.5 rounded-full animate-bounce shadow-md">
-                        แจกใหญ่ 50 รางวัล! 🎁
+                <div class="relative z-10 text-center space-y-3 w-full">
+                    <!-- ปรับขนาดคำว่าแจกใหญ่ให้ใหญ่ขึ้น -->
+                    <div class="inline-block bg-carrier-gold text-carrier-dark text-base sm:text-lg font-extrabold px-6 py-2 rounded-full animate-pulse shadow-lg mb-2">
+                        แจกใหญ่ 50 รางวัล ! 🎁
                     </div>
-                    <h2 class="text-lg sm:text-xl md:text-2xl font-extrabold text-carrier-dark tracking-wide">
-                        ทายผลแชมป์ฟุตบอลโลก 2026
+                    
+                    <h2 class="text-xl sm:text-2xl font-bold text-gray-700 tracking-wide leading-tight">
+                        ร่วมเชียร์ทีมโปรดของคุณ <br>
+                        <span class="text-2xl sm:text-4xl font-extrabold text-carrier-dark mt-2 inline-block drop-shadow-sm">ศึกฟุตบอลโลก 2026! ⚽🔥</span>
                     </h2>
+                    
+                    <div class="w-16 h-1 bg-carrier-blue mx-auto rounded-full my-3"></div>
+
                     <p class="text-sm sm:text-base text-gray-600 font-medium leading-relaxed max-w-lg mx-auto">
-                        <span class="text-carrier-blue font-bold">ทายถูกปั๊บ รับเลย!</span> 50 ท่านแรกที่ทายแชมป์ถูกต้อง รับของรางวัลสุดเอ็กซ์คลูซีฟจากแคเรียร์ทันที
+                        เพียงลงทะเบียนเลือกทีมที่คุณเชียร์<br>
+                        หากทีมที่คุณเชียร์คว้าแชมป์โลก 🎉<br>
+                        <span class="text-carrier-dark font-bold">50 ท่านแรกที่ลงทะเบียนตรงกับทีมแชมป์</span>
+                        <br><br>
+                        <span class="text-carrier-blue font-bold text-base sm:text-lg">รับของรางวัลสุดเอ็กซ์คลูซีฟจากแคเรียร์ทันที!</span>
                     </p>
                 </div>
             </div>
@@ -135,28 +140,25 @@
 
     <!-- Main Content -->
     <main class="max-w-3xl mx-auto px-4 sm:px-6 relative z-20">
-        <!-- กล่องฟอร์มหลัก -->
-        <div class="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden border border-white">
+        <div class="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl overflow-visible border border-white">
             
-            <!-- Navigation Tabs -->
-            <div class="flex border-b border-gray-100 bg-gray-50/80">
-                <button id="tab-form" onclick="switchTab('form')" class="flex-1 py-4 text-carrier-blue nav-active transition-colors focus:outline-none flex items-center justify-center gap-2 text-base">
+            <div class="flex border-b border-gray-100 bg-gray-50/80 rounded-t-2xl">
+                <button id="tab-form" onclick="switchTab('form')" class="flex-1 py-4 text-carrier-blue nav-active transition-colors focus:outline-none flex items-center justify-center gap-2 text-base rounded-tl-2xl">
                     <i class="fa-solid fa-pen-to-square"></i> ลงทะเบียนทายผล
                 </button>
-                <button id="tab-check" onclick="switchTab('check')" class="flex-1 py-4 text-gray-500 font-medium border-b-[3px] border-transparent hover:text-carrier-blue hover:bg-gray-50 transition-colors focus:outline-none flex items-center justify-center gap-2 text-base">
+                <button id="tab-check" onclick="switchTab('check')" class="flex-1 py-4 text-gray-500 font-medium border-b-[3px] border-transparent hover:text-carrier-blue hover:bg-gray-50 transition-colors focus:outline-none flex items-center justify-center gap-2 text-base rounded-tr-2xl">
                     <i class="fa-solid fa-magnifying-glass"></i> ตรวจสอบสิทธิ์
                 </button>
             </div>
 
-            <div class="p-6 sm:p-8">
+            <div class="p-6 sm:p-8 overflow-visible">
                 <!-- FORM VIEW -->
                 <div id="view-form" class="space-y-6">
                     <form id="registrationForm" onsubmit="handleFormSubmit(event)" class="space-y-6">
                         
-                        <!-- 1. ทีมฟุตบอลโลกที่เชียร์ (Highlight โดดเด่นสุด) -->
-                        <div class="bg-gradient-to-br from-carrier-goldlight/40 to-white p-1 rounded-xl shadow-lg animate-pulse-glow">
+                        <!-- 1. ทีมฟุตบอลโลกที่เชียร์ (Highlight) - บังคับ z-index ให้ลอยเหนือสุด -->
+                        <div class="bg-gradient-to-br from-carrier-goldlight/40 to-white p-1 rounded-xl shadow-lg animate-pulse-glow relative dropdown-top">
                             <div class="bg-white border-2 border-carrier-gold p-5 rounded-lg relative overflow-visible">
-                                <!-- แถบป้ายกำกับ -->
                                 <div class="absolute -top-3.5 left-4 bg-carrier-gold text-carrier-dark text-xs font-bold px-3 py-1 rounded shadow-sm flex items-center gap-1.5">
                                     <i class="fa-solid fa-crown"></i> ทายผลทีมแชมป์
                                 </div>
@@ -164,23 +166,25 @@
                                 <label class="block text-base font-bold text-carrier-dark mb-3 mt-1 flex items-center gap-2">
                                     <i class="fa-solid fa-trophy text-carrier-gold text-xl animate-float"></i> ทีมที่คุณคาดว่าจะเป็นแชมป์ <span class="text-red-500">*</span>
                                 </label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                <div class="relative overflow-visible">
+                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none z-10">
                                         <div id="flagIcon" class="w-7 h-5 flex items-center justify-center rounded-sm overflow-hidden bg-gray-200 shadow-sm border border-gray-300">
                                             <i class="fa-solid fa-globe text-gray-400 text-xs"></i>
                                         </div>
                                     </div>
                                     <input type="text" id="inputTeam" autocomplete="off" required placeholder="พิมพ์ชื่อประเทศที่เชียร์ (เช่น บราซิล, ฝรั่งเศส)" 
-                                        class="w-full pl-13 pr-4 py-3.5 bg-white border border-gray-300 rounded-lg input-glow transition-shadow text-carrier-dark text-lg font-bold placeholder-gray-400" style="padding-left: 3.25rem;">
+                                        class="w-full pl-13 pr-4 py-3.5 bg-white border border-gray-300 rounded-lg input-glow transition-shadow text-carrier-dark text-lg font-bold placeholder-gray-400 relative z-20" style="padding-left: 3.25rem;">
+                                    
+                                    <!-- Dropdown Suggestions: บังคับให้อยู่บนสุดและข้ามขอบเขตกล่อง -->
+                                    <ul id="teamSuggestions" class="hidden absolute left-0 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-2xl max-h-60 overflow-y-auto dropdown-top"></ul>
                                 </div>
                                 <p class="text-xs text-gray-500 mt-2 font-medium"><i class="fa-solid fa-circle-info text-carrier-blue mr-1"></i> เลือกทีมได้เพียง 1 ทีมเท่านั้น และไม่สามารถเปลี่ยนแปลงได้</p>
-                                <ul id="teamSuggestions" class="hidden absolute z-30 w-full left-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-xl max-h-60 overflow-y-auto"></ul>
                             </div>
                         </div>
 
                         <hr class="border-gray-100">
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-0">
                             <!-- 2. ชื่อ นามสกุล -->
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-2">ชื่อ - นามสกุล <span class="text-red-500">*</span></label>
@@ -208,48 +212,40 @@
                             </div>
                         </div>
 
-                        <!-- 4. ที่อยู่สำหรับการติดตั้ง/จัดส่ง -->
-                        <div class="bg-gray-50 rounded-xl p-5 sm:p-6 border border-gray-200">
+                        <!-- 4. ที่อยู่ -->
+                        <div class="bg-gray-50 rounded-xl p-5 sm:p-6 border border-gray-200 relative z-0">
                             <h3 class="text-sm font-bold text-carrier-dark mb-4 flex items-center gap-2 pb-2 border-b border-gray-200">
                                 <i class="fa-solid fa-location-dot text-carrier-blue text-lg"></i> ที่อยู่สำหรับติดตั้ง / จัดส่งของรางวัล
                             </h3>
-                            
                             <div class="space-y-4">
-                                <!-- ที่อยู่รายละเอียด -->
                                 <div>
                                     <label class="block text-xs font-semibold text-gray-600 mb-1.5">บ้านเลขที่, หมู่, ซอย, ถนน <span class="text-red-500">*</span></label>
                                     <textarea id="inputAddressDetail" required rows="2" placeholder="เช่น 123/45 หมู่ 1 ซ.สุขุมวิท 1 ถ.สุขุมวิท" 
                                         class="w-full px-4 py-2.5 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-carrier-blue focus:border-carrier-blue transition-shadow text-gray-800 resize-none font-medium text-sm"></textarea>
                                 </div>
-
-                                <!-- ตำบล อำเภอ จังหวัด รหัสไปรษณีย์ -->
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div>
                                         <label class="block text-xs font-semibold text-gray-600 mb-1.5">ตำบล / แขวง <span class="text-red-500">*</span></label>
-                                        <input type="text" id="inputTambon" required placeholder="เช่น บางกะปิ" 
-                                            class="w-full px-4 py-2.5 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-carrier-blue focus:border-carrier-blue transition-shadow text-gray-800 text-sm font-medium">
+                                        <input type="text" id="inputTambon" required placeholder="เช่น บางกะปิ" class="w-full px-4 py-2.5 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-carrier-blue focus:border-carrier-blue transition-shadow text-gray-800 text-sm font-medium">
                                     </div>
                                     <div>
                                         <label class="block text-xs font-semibold text-gray-600 mb-1.5">อำเภอ / เขต <span class="text-red-500">*</span></label>
-                                        <input type="text" id="inputAmphoe" required placeholder="เช่น ห้วยขวาง" 
-                                            class="w-full px-4 py-2.5 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-carrier-blue focus:border-carrier-blue transition-shadow text-gray-800 text-sm font-medium">
+                                        <input type="text" id="inputAmphoe" required placeholder="เช่น ห้วยขวาง" class="w-full px-4 py-2.5 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-carrier-blue focus:border-carrier-blue transition-shadow text-gray-800 text-sm font-medium">
                                     </div>
                                     <div>
                                         <label class="block text-xs font-semibold text-gray-600 mb-1.5">จังหวัด <span class="text-red-500">*</span></label>
-                                        <input type="text" id="inputProvince" required placeholder="เช่น กรุงเทพมหานคร" 
-                                            class="w-full px-4 py-2.5 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-carrier-blue focus:border-carrier-blue transition-shadow text-gray-800 text-sm font-medium">
+                                        <input type="text" id="inputProvince" required placeholder="เช่น กรุงเทพมหานคร" class="w-full px-4 py-2.5 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-carrier-blue focus:border-carrier-blue transition-shadow text-gray-800 text-sm font-medium">
                                     </div>
                                     <div>
                                         <label class="block text-xs font-semibold text-gray-600 mb-1.5">รหัสไปรษณีย์ <span class="text-red-500">*</span></label>
-                                        <input type="text" id="inputZipcode" required pattern="[0-9]{5}" maxlength="5" placeholder="เช่น 10310" 
-                                            class="w-full px-4 py-2.5 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-carrier-blue focus:border-carrier-blue transition-shadow text-gray-800 text-sm font-medium tracking-wide">
+                                        <input type="text" id="inputZipcode" required pattern="[0-9]{5}" maxlength="5" placeholder="เช่น 10310" class="w-full px-4 py-2.5 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-carrier-blue focus:border-carrier-blue transition-shadow text-gray-800 text-sm font-medium tracking-wide">
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- 5. แอร์ที่เลือกติด -->
-                        <div>
+                        <!-- 5. แอร์ -->
+                        <div class="relative z-0">
                             <label class="block text-sm font-semibold text-gray-700 mb-2">แอร์แคเรียร์ที่เลือกติดตั้ง <span class="text-red-500">*</span></label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
@@ -259,9 +255,6 @@
                                     <option value="" disabled selected>-- คลิกลงเพื่อเลือกรุ่นแอร์แคเรียร์ --</option>
                                     <option value="Tech S (NSAA)">Tech S (NSAA)</option>
                                     <option value="Tech V (NVAA)">Tech V (NVAA)</option>
-                                    <option value="Copper 7 (TSAA)">Copper 7 (TSAA)</option>
-                                    <option value="Copper 10 (TVDA)">Copper 10 (TVDA)</option>
-                                    <option value="Copper 11 (TVEA)">Copper 11 (TVEA)</option>
                                     <option value="Copper-Seal (TVDB)">Copper-Seal (TVDB)</option>
                                     <option value="Copper-Ion (TVEB)">Copper-Ion (TVEB)</option>
                                     <option value="X-inverter Plus (TVAB)">X-inverter Plus (TVAB)</option>
@@ -276,7 +269,7 @@
                         </div>
 
                         <!-- Submit Button -->
-                        <div class="pt-6">
+                        <div class="pt-6 relative z-0">
                             <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-carrier-blue to-carrier-dark hover:from-carrier-dark hover:to-carrier-dark text-white font-bold py-4 px-4 rounded-xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 text-lg border border-carrier-blue/50">
                                 <span id="submitBtnText" class="flex items-center gap-2">
                                     <i class="fa-solid fa-futbol animate-spin" style="animation-duration: 3s;"></i> ยืนยันการทายผลและลงทะเบียน
@@ -314,7 +307,6 @@
                             </div>
                         </form>
 
-                        <!-- Result Box -->
                         <div id="checkResult" class="hidden bg-white border-2 border-green-100 rounded-2xl overflow-hidden shadow-xl relative transform transition-all duration-300">
                             <div class="bg-gradient-to-r from-green-50 to-white px-6 py-4 border-b border-green-100 flex items-center gap-3">
                                 <i class="fa-solid fa-circle-check text-green-500 text-2xl"></i>
@@ -334,15 +326,12 @@
                                     </div>
                                     <div class="bg-gradient-to-br from-carrier-goldlight/50 to-white p-4 rounded-xl border border-carrier-gold">
                                         <p class="text-[11px] text-carrier-dark uppercase tracking-wider font-bold mb-1 flex items-center gap-1.5"><i class="fa-solid fa-crown text-carrier-gold"></i> ทายผลทีมแชมป์</p>
-                                        <p id="resultTeam" class="text-carrier-dark font-extrabold text-xl flex items-center gap-3 mt-1">
-                                            -
-                                        </p>
+                                        <p id="resultTeam" class="text-carrier-dark font-extrabold text-xl flex items-center gap-3 mt-1">-</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Not Found Box -->
                         <div id="checkNotFound" class="hidden bg-red-50 border border-red-100 rounded-2xl p-8 text-center transform transition-all duration-300 shadow-md">
                             <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-white text-red-500 mb-4 shadow-sm border border-red-100">
                                 <i class="fa-solid fa-xmark text-2xl"></i>
@@ -365,10 +354,8 @@
         </div>
     </main>
 
-    <!-- JavaScript Execution -->
     <script>
-        // URL ของ Google Apps Script ล่าสุดที่คุณให้มา
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyY84085xBsD86qqu1KzhfWXVUqwFAz3r_dzHSPwUVx2tDvC6_jy0gF5wowGN236jLV/exec';
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwXIslPI2UPJ2yrpY8XUyDCrp0yzUCnaUqV8HMUVYST7gaZimz7IDjvQyO48NgsyODu/exec';
 
         const wcTeams = [
             { name: "กาตาร์", code: "qa" }, { name: "เกาหลีใต้", code: "kr" }, { name: "จอร์แดน", code: "jo" }, { name: "ซาอุดีอาระเบีย", code: "sa" }, { name: "ญี่ปุ่น", code: "jp" }, { name: "ออสเตรเลีย", code: "au" }, { name: "อิรัก", code: "iq" }, { name: "อิหร่าน", code: "ir" }, { name: "อุซเบกิสถาน", code: "uz" },
@@ -379,16 +366,12 @@
             { name: "นิวซีแลนด์", code: "nz" }
         ];
 
-        let registrationsData = [];
-
-        // --- Team Search Logic ---
         const teamInput = document.getElementById('inputTeam');
         const teamSuggestions = document.getElementById('teamSuggestions');
         const flagIcon = document.getElementById('flagIcon');
 
         function renderTeamSuggestions(query = '') {
             if (!teamSuggestions) return;
-            
             teamSuggestions.innerHTML = '';
             const results = wcTeams.filter(team => team.name.toLowerCase().includes(query.toLowerCase()));
             
@@ -397,20 +380,17 @@
                 results.forEach(team => {
                     const li = document.createElement('li');
                     li.className = 'px-4 py-3 hover:bg-blue-50 cursor-pointer border-b border-gray-100 last:border-0 flex items-center gap-3 transition-colors';
-                    
                     const highlightedName = query ? team.name.replace(new RegExp(`(${query})`, "gi"), "<span class='text-carrier-blue font-bold'>$1</span>") : team.name;
 
                     li.innerHTML = `
                         <img src="https://flagcdn.com/w40/${team.code}.png" alt="${team.name} flag" class="w-8 h-5 rounded-sm shadow-sm object-cover border border-gray-200">
                         <span class="text-gray-800 font-bold text-base">${highlightedName}</span>
                     `;
-                    
                     li.addEventListener('click', () => {
                         teamInput.value = team.name;
                         teamSuggestions.classList.add('hidden');
                         flagIcon.innerHTML = `<img src="https://flagcdn.com/w40/${team.code}.png" class="w-full h-full object-cover" alt="flag">`;
                     });
-                    
                     teamSuggestions.appendChild(li);
                 });
             } else {
@@ -420,7 +400,6 @@
 
         if (teamInput) {
             teamInput.addEventListener('focus', () => renderTeamSuggestions(teamInput.value));
-            
             teamInput.addEventListener('input', function() {
                 renderTeamSuggestions(this.value.trim());
                 const exactMatch = wcTeams.find(t => t.name === this.value.trim());
@@ -432,21 +411,16 @@
             });
         }
 
-        // ซ่อน Dropdown เมื่อคลิกที่อื่น
         document.addEventListener('click', function(e) {
             if (teamInput && teamSuggestions && e.target !== teamInput && !teamSuggestions.contains(e.target)) {
                 teamSuggestions.classList.add('hidden');
             }
         });
 
-        // Toast Notification
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             if (!container) return;
-            
             const toast = document.createElement('div');
-            toast.style.pointerEvents = 'auto';
-            
             const styles = type === 'success' 
                 ? { bg: 'bg-white', border: 'border-l-4 border-green-500', icon: 'fa-check-circle text-green-500' }
                 : (type === 'error' ? { bg: 'bg-white', border: 'border-l-4 border-red-500', icon: 'fa-triangle-exclamation text-red-500' } 
@@ -454,17 +428,12 @@
 
             toast.className = `flex items-center gap-3 px-5 py-4 rounded-xl shadow-2xl transform transition-all duration-300 translate-y-10 opacity-0 ${styles.bg} ${styles.border}`;
             toast.innerHTML = `<i class="fa-solid ${styles.icon} text-xl"></i><p class="text-gray-800 font-bold text-sm flex-1 tracking-wide">${message}</p>`;
-            
             container.appendChild(toast);
             
             setTimeout(() => toast.classList.remove('translate-y-10', 'opacity-0'), 10);
-            setTimeout(() => {
-                toast.classList.add('opacity-0');
-                setTimeout(() => toast.remove(), 300);
-            }, 4500);
+            setTimeout(() => { toast.classList.add('opacity-0'); setTimeout(() => toast.remove(), 300); }, 4500);
         }
 
-        // Tab Switching Logic
         window.switchTab = function(tab) {
             const formView = document.getElementById('view-form');
             const checkView = document.getElementById('view-check');
@@ -476,34 +445,24 @@
             document.getElementById('inputCheckPhone').value = '';
 
             if (tab === 'form') {
-                formView.classList.remove('hidden');
-                checkView.classList.add('hidden');
-                
-                tabForm.classList.add('nav-active');
-                tabForm.classList.remove('text-gray-500', 'border-transparent', 'hover:text-carrier-blue', 'hover:bg-gray-50');
-                
-                tabCheck.classList.remove('nav-active');
-                tabCheck.classList.add('text-gray-500', 'border-transparent', 'hover:text-carrier-blue', 'hover:bg-gray-50');
+                formView.classList.remove('hidden'); checkView.classList.add('hidden');
+                tabForm.classList.add('nav-active'); tabForm.classList.remove('text-gray-500', 'border-transparent', 'hover:text-carrier-blue', 'hover:bg-gray-50');
+                tabCheck.classList.remove('nav-active'); tabCheck.classList.add('text-gray-500', 'border-transparent', 'hover:text-carrier-blue', 'hover:bg-gray-50');
             } else {
-                formView.classList.add('hidden');
-                checkView.classList.remove('hidden');
-                
-                tabCheck.classList.add('nav-active');
-                tabCheck.classList.remove('text-gray-500', 'border-transparent', 'hover:text-carrier-blue', 'hover:bg-gray-50');
-                
-                tabForm.classList.remove('nav-active');
-                tabForm.classList.add('text-gray-500', 'border-transparent', 'hover:text-carrier-blue', 'hover:bg-gray-50');
-                
+                formView.classList.add('hidden'); checkView.classList.remove('hidden');
+                tabCheck.classList.add('nav-active'); tabCheck.classList.remove('text-gray-500', 'border-transparent', 'hover:text-carrier-blue', 'hover:bg-gray-50');
+                tabForm.classList.remove('nav-active'); tabForm.classList.add('text-gray-500', 'border-transparent', 'hover:text-carrier-blue', 'hover:bg-gray-50');
                 setTimeout(() => document.getElementById('inputCheckPhone').focus(), 100);
             }
         }
 
-        // Handle Check Submission
         window.handleCheckSubmit = function(e) {
             e.preventDefault();
             const phone = document.getElementById('inputCheckPhone').value.trim();
             const resultBox = document.getElementById('checkResult');
             const notFoundBox = document.getElementById('checkNotFound');
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalBtnHtml = submitBtn.innerHTML;
             
             if (!/^[0-9]{10}$/.test(phone)) {
                 showToast("กรุณากรอกเบอร์โทรศัพท์ให้ครบ 10 หลัก", "error");
@@ -511,34 +470,57 @@
                 return;
             }
 
-            const userRecord = registrationsData.find(record => record.phone === phone);
+            resultBox.classList.add('hidden');
+            notFoundBox.classList.add('hidden');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> กำลังค้นหา...';
 
-            if (userRecord) {
-                notFoundBox.classList.add('hidden');
-                resultBox.classList.remove('hidden');
-                
-                document.getElementById('resultName').innerText = userRecord.name;
-                document.getElementById('resultAC').innerHTML = `<i class="fa-solid fa-snowflake text-carrier-blue"></i> <span>${userRecord.ac}</span>`;
-                document.getElementById('resultTeam').innerHTML = `
-                    <img src="https://flagcdn.com/w40/${userRecord.teamCode}.png" class="w-10 h-6 rounded shadow-sm object-cover border border-gray-200" alt="flag">
-                    <span>${userRecord.team}</span>
-                `;
-            } else {
-                resultBox.classList.add('hidden');
-                notFoundBox.classList.remove('hidden');
-            }
+            const payload = new URLSearchParams();
+            payload.append('action', 'check');
+            payload.append('phone', phone);
+
+            fetch(APPS_SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: payload
+            })
+            .then(response => { if (!response.ok) throw new Error('Network error'); return response.json(); })
+            .then(data => {
+                if (data.status === 'found') {
+                    const userRecord = data.data;
+                    const validTeam = wcTeams.find(t => t.name === userRecord.team);
+                    const teamCode = validTeam ? validTeam.code : 'th'; 
+
+                    notFoundBox.classList.add('hidden');
+                    resultBox.classList.remove('hidden');
+                    
+                    document.getElementById('resultName').innerText = userRecord.name;
+                    document.getElementById('resultAC').innerHTML = `<i class="fa-solid fa-snowflake text-carrier-blue"></i> <span>${userRecord.ac}</span>`;
+                    document.getElementById('resultTeam').innerHTML = `
+                        <img src="https://flagcdn.com/w40/${teamCode}.png" class="w-10 h-6 rounded shadow-sm object-cover border border-gray-200" alt="flag">
+                        <span>${userRecord.team}</span>
+                    `;
+                } else {
+                    resultBox.classList.add('hidden');
+                    notFoundBox.classList.remove('hidden');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showToast("ระบบขัดข้อง ไม่สามารถตรวจสอบสิทธิ์ได้ในขณะนี้", "error");
+            })
+            .finally(() => {
+                submitBtn.disabled = false; submitBtn.innerHTML = originalBtnHtml;
+            });
         }
 
-        // Handle Form Submission
         window.handleFormSubmit = function(e) {
             e.preventDefault();
-            
             const phone = document.getElementById('inputPhone').value.trim();
 
             if (!/^[0-9]{10}$/.test(phone)) {
                 showToast("กรุณากรอกเบอร์โทรศัพท์ให้ครบ 10 หลัก", "error");
-                document.getElementById('inputPhone').focus();
-                return;
+                document.getElementById('inputPhone').focus(); return;
             }
 
             const addrDetail = document.getElementById('inputAddressDetail').value.trim();
@@ -555,56 +537,35 @@
             const validTeam = wcTeams.find(t => t.name === team);
             if (!validTeam) {
                 showToast("กรุณาเลือกทีมฟุตบอลจากรายการที่ระบบแนะนำเท่านั้น", "error");
-                document.getElementById('inputTeam').focus();
-                return;
+                document.getElementById('inputTeam').focus(); return;
             }
 
             const payload = new URLSearchParams();
-            payload.append('name', name);
-            payload.append('phone', phone);
-            payload.append('address', fullAddress);
-            payload.append('ac', ac);
-            payload.append('team', team);
+            payload.append('action', 'register');
+            payload.append('name', name); payload.append('phone', phone);
+            payload.append('address', fullAddress); payload.append('ac', ac); payload.append('team', team);
 
             const submitBtn = document.getElementById('submitBtn');
             const submitBtnText = document.getElementById('submitBtnText');
             const submitSpinner = document.getElementById('submitSpinner');
             
-            submitBtn.disabled = true;
-            submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
-            submitBtnText.classList.add('hidden');
-            submitSpinner.classList.remove('hidden');
+            submitBtn.disabled = true; submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+            submitBtnText.classList.add('hidden'); submitSpinner.classList.remove('hidden');
 
             fetch(APPS_SCRIPT_URL, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: payload
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json(); 
-            })
+            .then(response => { if (!response.ok) throw new Error('Network error'); return response.json(); })
             .then(data => {
                 if (data.status === 'error' && data.message === 'duplicate') {
                     showToast("คุณได้ใช้เบอร์โทรศัพท์นี้ทายผลไปแล้ว! (1 เบอร์ / 1 สิทธิ์)", "error");
                     document.getElementById('inputPhone').focus();
                 } else if (data.status === 'success') {
-                    registrationsData.push({
-                        phone: phone,
-                        name: name,
-                        ac: ac,
-                        team: team,
-                        teamCode: validTeam.code
-                    });
-
                     showToast(`ทายผลสำเร็จ! เตรียมลุ้นแชมป์และของรางวัลได้เลย 🎉`, 'success');
                     e.target.reset();
                     flagIcon.innerHTML = `<i class="fa-solid fa-globe text-gray-400 text-xs"></i>`;
-                    
                     setTimeout(() => {
                         switchTab('check');
                         document.getElementById('inputCheckPhone').value = phone;
@@ -615,14 +576,11 @@
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
-                showToast("เกิดข้อผิดพลาดในการเชื่อมต่อ กรุณาลองใหม่อีกครั้ง", "error");
+                console.error('Error:', error); showToast("เกิดข้อผิดพลาดในการเชื่อมต่อ กรุณาลองใหม่อีกครั้ง", "error");
             })
             .finally(() => {
-                submitBtn.disabled = false;
-                submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
-                submitBtnText.classList.remove('hidden');
-                submitSpinner.classList.add('hidden');
+                submitBtn.disabled = false; submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                submitBtnText.classList.remove('hidden'); submitSpinner.classList.add('hidden');
             });
         }
     </script>

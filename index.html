@@ -30,16 +30,30 @@
         .winner-scroll::-webkit-scrollbar-thumb:hover {
             background: #94a3b8; 
         }
+        @keyframes pulse-slow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 2.5s infinite;
+        }
     </style>
 </head>
-<body class="text-gray-800 antialiased min-h-screen flex flex-col items-center py-10 px-4 sm:px-6 lg:px-8">
+<body class="bg-slate-100 text-gray-800 antialiased min-h-screen flex flex-col items-center py-10 px-4 sm:px-6 lg:px-8">
 
-    <div class="max-w-3xl w-full bg-white rounded-2xl shadow-xl overflow-hidden">
+    <div class="max-w-3xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100">
         
+        <!-- Logo Area -->
+        <div class="flex justify-center items-center py-5 bg-white">
+            <img src="https://s.imgz.io/2026/07/23/final-Logo-CarrierCampaign-2025---Copy---Copyf1f108234456eca0.png" alt="เพื่อนแท้ช่างแอร์ Carrier" class="h-16 sm:h-20 object-contain">
+        </div>
+
         <!-- Header Image or Banner area -->
-        <div class="bg-blue-600 p-6 text-center text-white">
-            <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-2">🎉 ประกาศผลผู้โชคดี 🎉</h1>
-            <p class="text-lg opacity-90">กิจกรรมทายผลฟุตบอล Carrier WC 2026</p>
+        <div class="bg-blue-800 p-6 sm:p-8 text-center text-white border-b-4 border-yellow-400">
+            <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-3 text-yellow-300">🎉 ประกาศผลผู้โชคดี 🎉</h1>
+            <p class="text-xl sm:text-2xl font-semibold mb-2">กิจกรรมร่วมเชียร์ทีมโปรด ในศึกฟุตบอลโลก 2026</p>
+            <p class="text-sm sm:text-base text-blue-100 opacity-90">ประกาศผลอย่างเป็นทางการ วันที่ 24 กรกฎาคม 2569 | โดย เพื่อนแท้ช่างแอร์แคเรียร์</p>
         </div>
 
         <div class="p-6 sm:p-10">
@@ -113,18 +127,35 @@
                 <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">รายชื่อผู้โชคดี 50 ท่าน</h2>
                 
                 <!-- Mock list for preview. You will replace this with actual names later -->
-                <div class="bg-gray-50 border rounded-lg p-4 winner-scroll">
+                <div class="bg-gray-50 border rounded-lg p-4 winner-scroll shadow-inner">
                     <ul class="space-y-2 text-sm sm:text-base text-gray-700" id="winnerList">
                         <!-- We use JavaScript to populate this list for demonstration -->
                     </ul>
                 </div>
-                <p class="text-xs text-gray-500 mt-2 text-center">*กรุณาตรวจสอบรายชื่อ หากพบชื่อของท่าน กรุณากรอกข้อมูลยืนยันสิทธิ์ด้านล่าง</p>
+                
+                <!-- กล่องเน้นย้ำการยืนยันสิทธิ์ -->
+                <div class="mt-6 bg-red-50 border-2 border-red-500 p-4 sm:p-5 rounded-lg shadow-md animate-pulse-slow">
+                    <div class="flex items-start sm:items-center">
+                        <span class="text-3xl mr-3 mt-1 sm:mt-0">🚨</span>
+                        <div>
+                            <p class="text-red-700 font-bold text-lg">ประกาศสำคัญ: การยืนยันสิทธิ์รับรางวัล!</p>
+                            <p class="text-red-600 text-sm sm:text-base mt-1">ผู้ที่มีรายชื่อ กรุณาเลื่อนลงไปกรอกข้อมูลเพื่อ <span class="font-bold text-red-700">"ยืนยันสิทธิ์"</span> ด้านล่าง <span class="font-extrabold underline bg-yellow-200 px-1 rounded">ภายในวันที่ 31 กรกฎาคม 2569</span> มิฉะนั้นจะถือว่าสละสิทธิ์</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Claim Form Section -->
-            <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-6 sm:p-8">
-                <h2 class="text-xl font-bold text-gray-800 mb-2">ยืนยันสิทธิ์และข้อมูลจัดส่ง</h2>
-                <p class="text-gray-600 text-sm mb-6">ผู้ที่มีรายชื่อ กรุณากรอกข้อมูลเพื่อรับของรางวัล ทางทีมงานจะจัดส่งให้ตามที่อยู่นี้ครับ</p>
+            <div class="bg-white border-2 border-blue-200 shadow-lg rounded-xl p-6 sm:p-8">
+                <div class="border-b-2 border-blue-800 pb-3 mb-6">
+                    <h2 class="text-2xl font-bold text-blue-800 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        กรอกข้อมูลยืนยันสิทธิ์และจัดส่ง
+                    </h2>
+                    <p class="text-gray-600 text-sm mt-2">ผู้ที่มีรายชื่อ กรุณากรอกข้อมูลเพื่อรับของรางวัล ทางทีมงานจะจัดส่งให้ตามที่อยู่นี้ครับ</p>
+                </div>
                 
                 <form id="shippingForm" class="space-y-5">
                     
@@ -154,7 +185,7 @@
 
                     <div>
                         <label for="verifyPhone" class="block text-sm font-medium text-gray-700 mb-1">ยืนยันตัวตน (เบอร์โทรศัพท์ 4 ตัวท้ายที่ใช้ร่วมกิจกรรม) <span class="text-red-500">*</span></label>
-                        <input type="text" id="verifyPhone" name="verifyPhone" required placeholder="ตัวเลข 4 หลัก เช่น 1234" maxlength="4" pattern="[0-9]{4}" title="กรุณากรอกตัวเลข 4 หลัก"
+                        <input type="text" id="verifyPhone" name="verifyPhone" required placeholder="เลขท้ายเบอร์โทรศัพท์ 4 ตัว" maxlength="4" pattern="[0-9]{4}" title="กรุณากรอกตัวเลข 4 หลัก"
                             class="w-full px-4 py-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition-colors bg-blue-50 font-mono tracking-widest text-center text-lg">
                         <p class="text-xs text-gray-500 mt-1">*อ้างอิงจากข้อมูลเดิม เพื่อป้องกันการสวมสิทธิ์รับรางวัล</p>
                     </div>
@@ -198,10 +229,10 @@
                         </div>
                     </div>
 
-                    <div class="pt-2">
+                    <div class="pt-4">
                         <button type="submit" id="submitBtn" 
-                            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-md shadow-md transition-colors duration-200 flex justify-center items-center">
-                            <span>ยืนยันและส่งข้อมูล</span>
+                            class="w-full bg-blue-800 hover:bg-blue-900 text-white text-lg font-bold py-4 px-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 flex justify-center items-center transform hover:-translate-y-1">
+                            <span>✅ ยืนยันสิทธิ์และส่งข้อมูล</span>
                             <!-- Loading Spinner (Hidden by default) -->
                             <svg id="loadingSpinner" class="animate-spin ml-2 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>

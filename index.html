@@ -3,690 +3,415 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ร่วมเชียร์ทีมโปรดของคุณ
-ศึกฟุตบอลโลก 2026! ⚽🔥</title>
+    <title>ประกาศผลรางวัล ทายผลฟุตบอล - Carrier</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        carrier: {
-                            blue: '#005baa',
-                            dark: '#003b73',
-                            light: '#e0f0ff',
-                            gold: '#ffb700',
-                            goldlight: '#fff2cc'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Prompt', 'sans-serif'],
-                    },
-                    animation: {
-                        'gradient-x': 'gradient-x 3s ease infinite',
-                        'float': 'float 3s ease-in-out infinite',
-                        'pulse-glow': 'pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'bounce-ball': 'bounce-ball 8s linear infinite',
-                        'bounce-ball-reverse': 'bounce-ball-reverse 10s linear infinite',
-                    },
-                    keyframes: {
-                        'gradient-x': {
-                            '0%, 100%': { 'background-size': '200% 200%', 'background-position': 'left center' },
-                            '50%': { 'background-size': '200% 200%', 'background-position': 'right center' },
-                        },
-                        'float': {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-5px)' },
-                        },
-                        'pulse-glow': {
-                            '0%, 100%': { opacity: 1, boxShadow: '0 0 0 0 rgba(255, 183, 0, 0.4)' },
-                            '50%': { opacity: .9, boxShadow: '0 0 0 10px rgba(255, 183, 0, 0)' },
-                        },
-                        'bounce-ball': {
-                            '0%': { transform: 'translateX(-100px) rotate(0deg) translateY(0)' },
-                            '25%': { transform: 'translateX(30vw) rotate(90deg) translateY(-30px)' },
-                            '50%': { transform: 'translateX(60vw) rotate(180deg) translateY(0)' },
-                            '75%': { transform: 'translateX(90vw) rotate(270deg) translateY(-30px)' },
-                            '100%': { transform: 'translateX(120vw) rotate(360deg) translateY(0)' }
-                        },
-                        'bounce-ball-reverse': {
-                            '0%': { transform: 'translateX(120vw) rotate(360deg) translateY(0)' },
-                            '25%': { transform: 'translateX(90vw) rotate(270deg) translateY(20px)' },
-                            '50%': { transform: 'translateX(50vw) rotate(180deg) translateY(0)' },
-                            '75%': { transform: 'translateX(20vw) rotate(90deg) translateY(20px)' },
-                            '100%': { transform: 'translateX(-100px) rotate(0deg) translateY(0)' }
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        body { 
-            font-family: 'Prompt', sans-serif; 
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: #f0fdf4; /* Light green background fitting for football/sports */
         }
-        /* สร้างเลเยอร์ภาพพื้นหลังแยก เพื่อแก้ปัญหาภาพหายบนมือถือ (iOS/Android) */
-        .bg-image-fixed {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://img2.pic.in.th/Screenshot-2026-06-18-111559.png');
-            background-size: cover;
-            background-position: center;
-            z-index: -2;
+        /* Custom scrollbar for winner list if it gets too long */
+        .winner-scroll {
+            max-height: 400px;
+            overflow-y: auto;
         }
-        .bg-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            /* ปรับความโปร่งใสลงจาก 0.88 เป็น 0.70 เพื่อให้พื้นหลังดูเข้มขึ้นและเห็นชัดขึ้น */
-            background: rgba(255, 255, 255, 0.70); 
-            z-index: -1; pointer-events: none;
+        .winner-scroll::-webkit-scrollbar {
+            width: 8px;
         }
-        .nav-active { border-bottom-width: 3px; border-color: #005baa; color: #005baa; font-weight: 700; }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-        .loader { border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top: 3px solid #ffffff; width: 20px; height: 20px; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .input-glow:focus { box-shadow: 0 0 0 4px rgba(255, 183, 0, 0.2); border-color: #ffb700; }
-        
-        /* สร้างตัวลอยอยู่เหนือสุดสำหรับ Dropdown */
-        .dropdown-top { z-index: 100 !important; }
+        .winner-scroll::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+            border-radius: 4px;
+        }
+        .winner-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        .winner-scroll::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
     </style>
 </head>
-<body class="text-gray-800 antialiased min-h-screen relative pb-12 overflow-x-hidden">
+<body class="text-gray-800 antialiased min-h-screen flex flex-col items-center py-10 px-4 sm:px-6 lg:px-8">
 
-    <!-- เพิ่มกล่องภาพพื้นหลัง -->
-    <div class="bg-image-fixed"></div>
-    <div class="bg-overlay"></div>
-    <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-3 w-80" style="pointer-events: none;"></div>
-
-    <!-- ปุ่มกล่องของขวัญ (ลอยอยู่มุมซ้ายล่าง) -->
-    <div id="floatingGiftBox" class="fixed bottom-6 left-6 z-40 flex flex-col items-center cursor-pointer transform transition-transform hover:scale-110" onclick="openGiftModal()">
-        <span class="bg-red-500 text-white text-[11px] sm:text-xs font-bold px-3 py-1 rounded-full mb-1 animate-pulse shadow-md whitespace-nowrap">ลองจิ้มดู ✨</span>
-        <div class="bg-white p-3 sm:p-4 rounded-full shadow-2xl border-2 border-carrier-gold animate-bounce flex items-center justify-center relative overflow-hidden">
-            <div class="absolute inset-0 bg-carrier-goldlight opacity-20"></div>
-            <i class="fa-solid fa-gift text-3xl sm:text-4xl text-carrier-blue relative z-10"></i>
-        </div>
-    </div>
-
-    <!-- Modal ตัวเลือกของขวัญ -->
-    <div id="giftModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity px-4">
-        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl transform transition-transform scale-95 duration-300 relative" id="giftModalContent">
-            <!-- ปุ่มปิดมุมขวาบน -->
-            <button onclick="closeGiftModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 focus:outline-none">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
-            
-            <div class="text-center mb-6 mt-2">
-                <div class="inline-block bg-carrier-goldlight p-4 rounded-full mb-4 animate-float">
-                    <i class="fa-solid fa-gift text-4xl text-carrier-gold"></i>
-                </div>
-                <h3 class="text-xl sm:text-2xl font-extrabold text-carrier-dark">แอบกระซิบหน่อย!</h3>
-                <p class="text-sm text-gray-500 mt-2 font-medium">ถ้าเลือกได้ อยากให้เราแจกของรางวัลพิเศษอะไรเพิ่มเติมครับ?</p>
-            </div>
-            
-            <div class="grid grid-cols-2 gap-3 sm:gap-4">
-                <button onclick="submitGiftChoice('เสื้อ')" class="flex flex-col items-center justify-center gap-3 p-4 sm:p-5 border-2 border-gray-100 rounded-2xl hover:border-carrier-blue hover:bg-carrier-light hover:shadow-md transition-all group focus:outline-none">
-                    <i class="fa-solid fa-shirt text-4xl text-gray-400 group-hover:text-carrier-blue transition-colors"></i>
-                    <span class="font-bold text-gray-700 group-hover:text-carrier-dark text-sm sm:text-base">เสื้อ</span>
-                </button>
-                <button onclick="submitGiftChoice('เครื่องมือช่าง')" class="flex flex-col items-center justify-center gap-3 p-4 sm:p-5 border-2 border-gray-100 rounded-2xl hover:border-carrier-blue hover:bg-carrier-light hover:shadow-md transition-all group focus:outline-none">
-                    <i class="fa-solid fa-toolbox text-4xl text-gray-400 group-hover:text-carrier-blue transition-colors"></i>
-                    <span class="font-bold text-gray-700 group-hover:text-carrier-dark text-sm sm:text-base">เครื่องมือช่าง</span>
-                </button>
-            </div>
-            <p class="text-[11px] text-center text-gray-400 mt-5">(การโหวตนี้ไม่มีผลต่อการลงทะเบียนหลักครับ)</p>
-        </div>
-    </div>
-
-    <!-- Header Area -->
-    <header class="relative z-10 pt-8 pb-6 flex flex-col items-center text-center px-4 overflow-hidden">
+    <div class="max-w-3xl w-full bg-white rounded-2xl shadow-xl overflow-hidden">
         
-        <!-- แอนิเมชันลูกฟุตบอลวิ่งไปมา (เอา hidden ออก เพื่อให้แสดงบนมือถือ และปรับขนาด) -->
-        <i class="fa-solid fa-futbol absolute top-10 left-0 text-carrier-blue/20 text-4xl md:text-5xl animate-bounce-ball z-0" style="animation-duration: 9s;"></i>
-        <i class="fa-solid fa-futbol absolute top-32 left-0 text-carrier-dark/15 text-3xl animate-bounce-ball z-0" style="animation-duration: 12s; animation-delay: 2s;"></i>
-        <i class="fa-solid fa-futbol absolute top-20 right-0 text-carrier-blue/25 text-5xl md:text-6xl animate-bounce-ball-reverse z-0" style="animation-duration: 14s; animation-delay: 1s;"></i>
+        <!-- Header Image or Banner area -->
+        <div class="bg-blue-600 p-6 text-center text-white">
+            <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-2">🎉 ประกาศผลผู้โชคดี 🎉</h1>
+            <p class="text-lg opacity-90">กิจกรรมทายผลฟุตบอล Carrier WC 2026</p>
+        </div>
 
-        <!-- รูปภาพโลโก้แคมเปญ -->
-        <img src="https://img2.pic.in.th/final-Logo-CarrierCampaign-2025---Copy.md.png" alt="เพื่อนแท้ช่างแอร์ Carrier" class="h-auto w-full max-w-[22rem] mx-auto mb-4 drop-shadow-xl hover:scale-105 transition-transform duration-300 relative z-10">
-        
-        <!-- Banner โปรโมชันสุดพิเศษ -->
-        <div class="w-full max-w-2xl mt-2 rounded-2xl bg-gradient-to-r from-carrier-dark via-carrier-blue to-carrier-dark p-[3px] shadow-2xl animate-gradient-x transform transition-all hover:-translate-y-1 relative z-10">
-            <div class="bg-white rounded-xl px-4 py-6 sm:px-8 relative overflow-hidden flex flex-col items-center">
-                <!-- ไอคอนลูกบอลตกแต่ง -->
-                <i class="fa-solid fa-trophy absolute -top-4 -left-4 text-7xl text-carrier-goldlight/40 transform rotate-12 z-0"></i>
-                <i class="fa-solid fa-medal absolute -bottom-4 -right-4 text-7xl text-gray-50 transform -rotate-12 z-0"></i>
+        <div class="p-6 sm:p-10">
+            
+            <!-- Prize Details Section -->
+            <div class="mb-10 bg-blue-50 border-l-4 border-blue-500 p-5 rounded-r-lg">
+                <h2 class="text-xl font-semibold text-blue-800 mb-3 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+                    </svg>
+                    รายละเอียดของรางวัล
+                </h2>
+                <p class="text-sm text-gray-600 mb-4">ผู้โชคดีทั้ง 50 ท่าน จะได้รับรางวัลดังต่อไปนี้ตามลำดับที่ประกาศ:</p>
+                <ul class="space-y-3">
+                    <li class="flex items-start">
+                        <span class="text-2xl mr-3">🥇</span>
+                        <div>
+                            <span class="font-semibold text-gray-800">รางวัลที่ 1 (ลำดับที่ 1):</span>
+                            <p class="text-gray-600">หมวกซาฟารี + เสื้อคอปกเพื่อนแท้ช่างแอร์</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-2xl mr-3">🥈</span>
+                        <div>
+                            <span class="font-semibold text-gray-800">รางวัลที่ 2 (ลำดับที่ 2):</span>
+                            <p class="text-gray-600">หมวกแก็ป + เสื้อคอปกเพื่อนแท้ช่างแอร์</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-2xl mr-3">🥉</span>
+                        <div>
+                            <span class="font-semibold text-gray-800">รางวัลที่ 3 (ลำดับที่ 3):</span>
+                            <p class="text-gray-600">แก้วเก็บความเย็น + เสื้อคอปกเพื่อนแท้ช่างแอร์</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-2xl mr-3">👕</span>
+                        <div>
+                            <span class="font-semibold text-gray-800">รางวัลชมเชย (ลำดับที่ 4-50):</span>
+                            <p class="text-gray-600">เสื้อคอปกเพื่อนแท้ช่างแอร์</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Winners List Section -->
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">รายชื่อผู้โชคดี 50 ท่าน</h2>
                 
-                <div class="relative z-10 text-center space-y-3 w-full">
-                    <!-- ปรับขนาดคำว่าแจกใหญ่ให้ใหญ่ขึ้น -->
-                    <div class="inline-block bg-carrier-gold text-carrier-dark text-base sm:text-lg font-extrabold px-6 py-2 rounded-full animate-pulse shadow-lg mb-2">
-                        แจกใหญ่ 50 รางวัล! 🎁
+                <!-- Mock list for preview. You will replace this with actual names later -->
+                <div class="bg-gray-50 border rounded-lg p-4 winner-scroll">
+                    <ul class="space-y-2 text-sm sm:text-base text-gray-700" id="winnerList">
+                        <!-- We use JavaScript to populate this list for demonstration -->
+                    </ul>
+                </div>
+                <p class="text-xs text-gray-500 mt-2 text-center">*กรุณาตรวจสอบรายชื่อ หากพบชื่อของท่าน กรุณากรอกข้อมูลยืนยันสิทธิ์ด้านล่าง</p>
+            </div>
+
+            <!-- Claim Form Section -->
+            <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-6 sm:p-8">
+                <h2 class="text-xl font-bold text-gray-800 mb-2">ยืนยันสิทธิ์และข้อมูลจัดส่ง</h2>
+                <p class="text-gray-600 text-sm mb-6">ผู้ที่มีรายชื่อ กรุณากรอกข้อมูลเพื่อรับของรางวัล ทางทีมงานจะจัดส่งให้ตามที่อยู่นี้ครับ</p>
+                
+                <form id="shippingForm" class="space-y-5">
+                    
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">ชื่อ-นามสกุล <span class="text-red-500">*</span></label>
+                        <select id="name" name="name" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition-colors bg-white">
+                            <option value="" disabled selected>-- กรุณาเลือกชื่อของคุณจากรายชื่อผู้โชคดี --</option>
+                        </select>
+                    </div>
+
+                    <!-- เพิ่มช่องเลือกไซส์เสื้อตรงนี้ -->
+                    <div>
+                        <label for="shirtSize" class="block text-sm font-medium text-gray-700 mb-1">เลือกไซส์เสื้อที่ต้องการ <span class="text-red-500">*</span></label>
+                        <select id="shirtSize" name="shirtSize" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition-colors bg-white">
+                            <option value="" disabled selected>-- กรุณาเลือกไซส์เสื้อ --</option>
+                            <option value="S">S (รอบอก 38 นิ้ว)</option>
+                            <option value="M">M (รอบอก 40 นิ้ว)</option>
+                            <option value="L">L (รอบอก 42 นิ้ว)</option>
+                            <option value="XL">XL (รอบอก 44 นิ้ว)</option>
+                            <option value="2XL">2XL (รอบอก 46 นิ้ว)</option>
+                            <option value="3XL">3XL (รอบอก 48 นิ้ว)</option>
+                            <option value="4XL">4XL (รอบอก 50 นิ้ว)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="verifyPhone" class="block text-sm font-medium text-gray-700 mb-1">ยืนยันตัวตน (เบอร์โทรศัพท์ 4 ตัวท้ายที่ใช้ร่วมกิจกรรม) <span class="text-red-500">*</span></label>
+                        <input type="text" id="verifyPhone" name="verifyPhone" required placeholder="ตัวเลข 4 หลัก เช่น 1234" maxlength="4" pattern="[0-9]{4}" title="กรุณากรอกตัวเลข 4 หลัก"
+                            class="w-full px-4 py-2 border border-blue-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition-colors bg-blue-50 font-mono tracking-widest text-center text-lg">
+                        <p class="text-xs text-gray-500 mt-1">*อ้างอิงจากข้อมูลเดิม เพื่อป้องกันการสวมสิทธิ์รับรางวัล</p>
+                    </div>
+
+                    <!-- ส่วนแสดงข้อมูลที่อยู่เดิม และตัวเลือกแก้ไข -->
+                    <div id="addressDisplaySection" class="hidden bg-gray-50 p-4 rounded-lg border border-gray-200 space-y-3 mt-4">
+                        <h3 class="font-semibold text-gray-800 text-sm flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            ข้อมูลการจัดส่งเดิมของคุณ:
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-medium text-gray-500 mb-1">จังหวัดที่จัดส่ง</label>
+                                <input type="text" id="displayProvince" name="province" readonly
+                                    class="w-full px-4 py-2 border border-gray-200 rounded-md bg-gray-100 text-gray-600 cursor-not-allowed">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-gray-500 mb-1">รหัสไปรษณีย์</label>
+                                <input type="text" id="displayZipcode" name="zipcode" readonly 
+                                    class="w-full px-4 py-2 border border-gray-200 rounded-md bg-gray-100 text-gray-600 cursor-not-allowed">
+                            </div>
+                        </div>
+
+                        <div class="flex items-start mt-4 pt-2">
+                            <div class="flex items-center h-5">
+                                <input id="editAddressCb" name="isAddressEdited" type="checkbox" value="yes" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded cursor-pointer">
+                            </div>
+                            <div class="ml-3 text-sm">
+                                <label for="editAddressCb" class="font-medium text-gray-700 cursor-pointer">ข้อมูลจัดส่งไม่ถูกต้อง ต้องการแก้ไขที่อยู่ใหม่</label>
+                                <p class="text-gray-500">ติ๊กที่นี่ หากต้องการเปลี่ยนที่อยู่จัดส่งจากข้อมูลเดิมด้านบน</p>
+                            </div>
+                        </div>
+
+                        <div id="newAddressSection" class="hidden mt-3 pt-3 border-t border-gray-200">
+                            <label for="newAddress" class="block text-sm font-medium text-gray-700 mb-1">ระบุที่อยู่จัดส่งใหม่แบบเต็ม <span class="text-red-500">*</span></label>
+                            <textarea id="newAddress" name="newAddress" rows="3" placeholder="เช่น บ้านเลขที่ หมู่ ซอย ถนน ตำบล อำเภอ จังหวัด รหัสไปรษณีย์"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition-colors bg-white"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="pt-2">
+                        <button type="submit" id="submitBtn" 
+                            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-md shadow-md transition-colors duration-200 flex justify-center items-center">
+                            <span>ยืนยันและส่งข้อมูล</span>
+                            <!-- Loading Spinner (Hidden by default) -->
+                            <svg id="loadingSpinner" class="animate-spin ml-2 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                        </button>
                     </div>
                     
-                    <h2 class="text-xl sm:text-2xl font-bold text-gray-700 tracking-wide leading-tight">
-                        ร่วมเชียร์ทีมโปรดของคุณ <br>
-                        <span class="text-2xl sm:text-4xl font-extrabold text-carrier-dark mt-2 inline-block drop-shadow-sm">ศึกฟุตบอลโลก 2026! ⚽🔥</span>
-                    </h2>
-                    
-                    <div class="w-16 h-1 bg-carrier-blue mx-auto rounded-full my-3"></div>
-
-                    <p class="text-sm sm:text-base text-gray-600 font-medium leading-relaxed max-w-lg mx-auto">
-                        เพียงลงทะเบียนเลือกทีมที่คุณเชียร์<br>
-                        หากทีมที่คุณเชียร์คว้าแชมป์โลก 🎉<br>
-                        <span class="text-carrier-dark font-bold">50 ท่านแรกที่ลงทะเบียนตรงกับทีมแชมป์</span>
-                        <br><br>
-                        <span class="text-carrier-blue font-bold text-base sm:text-lg">รับของรางวัลสุดเอ็กซ์คลูซีฟจากแคเรียร์ทันที!</span>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="max-w-3xl mx-auto px-4 sm:px-6 relative z-20">
-        <div class="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl overflow-visible border border-white">
-            
-            <div class="flex border-b border-gray-100 bg-gray-50/80 rounded-t-2xl">
-                <button id="tab-form" onclick="switchTab('form')" class="flex-1 py-4 text-carrier-blue nav-active transition-colors focus:outline-none flex items-center justify-center gap-2 text-base rounded-tl-2xl">
-                    <i class="fa-solid fa-pen-to-square"></i> ลงทะเบียนทายผล
-                </button>
-                <button id="tab-check" onclick="switchTab('check')" class="flex-1 py-4 text-gray-500 font-medium border-b-[3px] border-transparent hover:text-carrier-blue hover:bg-gray-50 transition-colors focus:outline-none flex items-center justify-center gap-2 text-base rounded-tr-2xl">
-                    <i class="fa-solid fa-magnifying-glass"></i> ตรวจสอบสิทธิ์
-                </button>
-            </div>
-
-            <div class="p-6 sm:p-8 overflow-visible">
-                <!-- FORM VIEW -->
-                <div id="view-form" class="space-y-6">
-                    <form id="registrationForm" onsubmit="handleFormSubmit(event)" class="space-y-6">
-                        
-                        <!-- 1. ทีมฟุตบอลโลกที่เชียร์ (Highlight) - บังคับ z-index ให้ลอยเหนือสุด -->
-                        <div class="bg-gradient-to-br from-carrier-goldlight/40 to-white p-1 rounded-xl shadow-lg animate-pulse-glow relative dropdown-top">
-                            <div class="bg-white border-2 border-carrier-gold p-5 rounded-lg relative overflow-visible">
-                                <div class="absolute -top-3.5 left-4 bg-carrier-gold text-carrier-dark text-xs font-bold px-3 py-1 rounded shadow-sm flex items-center gap-1.5">
-                                    <i class="fa-solid fa-crown"></i> ทายผลทีมแชมป์
-                                </div>
-                                
-                                <label class="block text-base font-bold text-carrier-dark mb-3 mt-1 flex items-center gap-2">
-                                    <i class="fa-solid fa-trophy text-carrier-gold text-xl animate-float"></i> ทีมที่คุณคาดว่าจะเป็นแชมป์ <span class="text-red-500">*</span>
-                                </label>
-                                <div class="relative overflow-visible">
-                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none z-10">
-                                        <div id="flagIcon" class="w-7 h-5 flex items-center justify-center rounded-sm overflow-hidden bg-gray-200 shadow-sm border border-gray-300">
-                                            <i class="fa-solid fa-globe text-gray-400 text-xs"></i>
-                                        </div>
-                                    </div>
-                                    <input type="text" id="inputTeam" autocomplete="off" required placeholder="พิมพ์ชื่อประเทศที่เชียร์ (เช่น บราซิล, ฝรั่งเศส)" 
-                                        class="w-full pl-13 pr-4 py-3.5 bg-white border border-gray-300 rounded-lg input-glow transition-shadow text-carrier-dark text-lg font-bold placeholder-gray-400 relative z-20" style="padding-left: 3.25rem;">
-                                    
-                                    <!-- Dropdown Suggestions: บังคับให้อยู่บนสุดและข้ามขอบเขตกล่อง -->
-                                    <ul id="teamSuggestions" class="hidden absolute left-0 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-2xl max-h-60 overflow-y-auto dropdown-top"></ul>
-                                </div>
-                                <p class="text-xs text-gray-500 mt-2 font-medium"><i class="fa-solid fa-circle-info text-carrier-blue mr-1"></i> เลือกทีมได้เพียง 1 ทีมเท่านั้น และไม่สามารถเปลี่ยนแปลงได้</p>
-                            </div>
-                        </div>
-
-                        <hr class="border-gray-100">
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-0">
-                            <!-- 2. ชื่อ นามสกุล -->
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">ชื่อ - นามสกุล <span class="text-red-500">*</span></label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                                        <i class="fa-regular fa-user text-gray-400"></i>
-                                    </div>
-                                    <input type="text" id="inputName" required placeholder="เช่น นาย สมชาย รักแคเรียร์" 
-                                        class="w-full pl-10 pr-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-carrier-blue focus:border-carrier-blue transition-shadow text-gray-800 font-medium">
-                                </div>
-                                <p class="text-[11px] text-gray-500 mt-1">ระบุคำนำหน้า และเว้นวรรคระหว่างชื่อ-นามสกุล</p>
-                            </div>
-
-                            <!-- 3. เบอร์โทรศัพท์ -->
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">เบอร์โทรศัพท์ <span class="text-red-500">*</span></label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                                        <i class="fa-solid fa-mobile-screen-button text-gray-400"></i>
-                                    </div>
-                                    <input type="tel" id="inputPhone" required pattern="[0-9]{10}" maxlength="10" placeholder="ระบุตัวเลข 10 หลัก (เช่น 0812345678)" 
-                                        class="w-full pl-10 pr-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-carrier-blue focus:border-carrier-blue transition-shadow text-gray-800 font-medium tracking-wide">
-                                </div>
-                                <p class="text-[11px] text-gray-500 mt-1">ใช้สำหรับตรวจสอบสิทธิ์และติดต่อรับรางวัล</p>
-                            </div>
-                        </div>
-
-                        <!-- 4. ที่อยู่ -->
-                        <div class="bg-gray-50 rounded-xl p-5 sm:p-6 border border-gray-200 relative z-0">
-                            <h3 class="text-sm font-bold text-carrier-dark mb-4 flex items-center gap-2 pb-2 border-b border-gray-200">
-                                <i class="fa-solid fa-location-dot text-carrier-blue text-lg"></i> ที่อยู่สำหรับจัดส่งของรางวัล
-                            </h3>
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-xs font-semibold text-gray-600 mb-1.5">บ้านเลขที่, หมู่, ซอย, ถนน <span class="text-red-500">*</span></label>
-                                    <textarea id="inputAddressDetail" required rows="2" placeholder="เช่น 123/45 หมู่ 1 ซ.สุขุมวิท 1 ถ.สุขุมวิท" 
-                                        class="w-full px-4 py-2.5 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-carrier-blue focus:border-carrier-blue transition-shadow text-gray-800 resize-none font-medium text-sm"></textarea>
-                                </div>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="block text-xs font-semibold text-gray-600 mb-1.5">ตำบล / แขวง <span class="text-red-500">*</span></label>
-                                        <input type="text" id="inputTambon" required placeholder="เช่น บางกะปิ" class="w-full px-4 py-2.5 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-carrier-blue focus:border-carrier-blue transition-shadow text-gray-800 text-sm font-medium">
-                                    </div>
-                                    <div>
-                                        <label class="block text-xs font-semibold text-gray-600 mb-1.5">อำเภอ / เขต <span class="text-red-500">*</span></label>
-                                        <input type="text" id="inputAmphoe" required placeholder="เช่น ห้วยขวาง" class="w-full px-4 py-2.5 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-carrier-blue focus:border-carrier-blue transition-shadow text-gray-800 text-sm font-medium">
-                                    </div>
-                                    <div>
-                                        <label class="block text-xs font-semibold text-gray-600 mb-1.5">จังหวัด <span class="text-red-500">*</span></label>
-                                        <input type="text" id="inputProvince" required placeholder="เช่น กรุงเทพมหานคร" class="w-full px-4 py-2.5 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-carrier-blue focus:border-carrier-blue transition-shadow text-gray-800 text-sm font-medium">
-                                    </div>
-                                    <div>
-                                        <label class="block text-xs font-semibold text-gray-600 mb-1.5">รหัสไปรษณีย์ <span class="text-red-500">*</span></label>
-                                        <input type="text" id="inputZipcode" required pattern="[0-9]{5}" maxlength="5" placeholder="เช่น 10310" class="w-full px-4 py-2.5 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-carrier-blue focus:border-carrier-blue transition-shadow text-gray-800 text-sm font-medium tracking-wide">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 5. แอร์ -->
-                        <div class="relative z-0">
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">แอร์แคเรียร์ที่เลือกติดตั้ง <span class="text-red-500">*</span></label>
-                            <div class="relative">
-                                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                                    <i class="fa-regular fa-snowflake text-carrier-blue text-lg"></i>
-                                </div>
-                                <select id="inputAC" required class="w-full pl-11 pr-10 py-3.5 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-carrier-blue focus:border-carrier-blue transition-shadow text-gray-800 appearance-none font-medium text-base shadow-sm cursor-pointer">
-                                    <option value="" disabled selected>-- คลิกลงเพื่อเลือกรุ่นแอร์แคเรียร์ --</option>
-                                    <option value="Tech S (NSAA)">TECH S (NSAA)</option>
-                                    <option value="Tech V (NVAA)">TECH V (NVAA)</option>
-                                    <option value="Copper-Seal (TVDB)">Copper SEAL (TVDB)</option>
-                                    <option value="Copper-Ion (TVEB)">Copper ION (TVEB)</option>
-                                    <option value="X-inverter Plus (TVAB)">Xinverter Plus (TVAB)</option>
-                                    <option value="Discovery (TGF,BGF)">Discovery (TGF,BGF)</option>
-                                    <option value="X-Power Element (TGEV)">XPower Element (TGEV)</option>
-                                    <option value="X-Power Elite (TGV)">XPower Elite (TGV)</option>
-                                </select>
-                                <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
-                                    <i class="fa-solid fa-chevron-down text-carrier-blue text-sm"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Submit Button -->
-                        <div class="pt-6 relative z-0">
-                            <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-carrier-blue to-carrier-dark hover:from-carrier-dark hover:to-carrier-dark text-white font-bold py-4 px-4 rounded-xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 text-lg border border-carrier-blue/50">
-                                <span id="submitBtnText" class="flex items-center gap-2">
-                                    <i class="fa-solid fa-futbol animate-spin" style="animation-duration: 3s;"></i> ยืนยันการทายผลและลงทะเบียน
-                                </span>
-                                <div id="submitSpinner" class="loader hidden"></div>
-                            </button>
-                            <p class="text-center text-xs text-gray-400 mt-3 font-light">* เงื่อนไขเป็นไปตามที่บริษัทฯ กำหนด คำตัดสินของคณะกรรมการถือเป็นที่สิ้นสุด</p>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- CHECK STATUS VIEW -->
-                <div id="view-check" class="hidden">
-                    <div class="max-w-xl mx-auto">
-                        <div class="text-center mb-8">
-                            <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-blue-50 to-carrier-light text-carrier-blue mb-4 shadow-inner border border-white">
-                                <i class="fa-solid fa-shield-halved text-3xl"></i>
-                            </div>
-                            <h2 class="text-2xl font-extrabold text-carrier-dark tracking-wide">ตรวจสอบสิทธิ์การทายผล</h2>
-                            <p class="text-sm text-gray-500 mt-2 font-medium">กรอกเบอร์โทรศัพท์ 10 หลักเพื่อดูทีมแชมป์ที่คุณทายไว้</p>
-                        </div>
-
-                        <form id="checkForm" onsubmit="handleCheckSubmit(event)" class="mb-8 relative z-10">
-                            <div class="flex flex-col sm:flex-row gap-3">
-                                <div class="relative flex-grow">
-                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                        <i class="fa-solid fa-phone text-gray-400"></i>
-                                    </div>
-                                    <input type="tel" id="inputCheckPhone" required pattern="[0-9]{10}" maxlength="10" placeholder="ระบุเบอร์โทรศัพท์ 10 หลัก" 
-                                        class="w-full pl-11 pr-4 py-3.5 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-carrier-blue focus:border-carrier-blue transition-shadow text-gray-800 text-center sm:text-left text-lg font-bold tracking-wider shadow-sm">
-                                </div>
-                                <button type="submit" class="bg-carrier-blue hover:bg-carrier-dark text-white font-bold py-3.5 px-8 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 shrink-0">
-                                    <i class="fa-solid fa-magnifying-glass"></i> ค้นหา
-                                </button>
-                            </div>
-                        </form>
-
-                        <div id="checkResult" class="hidden bg-white border-2 border-green-100 rounded-2xl overflow-hidden shadow-xl relative transform transition-all duration-300">
-                            <div class="bg-gradient-to-r from-green-50 to-white px-6 py-4 border-b border-green-100 flex items-center gap-3">
-                                <i class="fa-solid fa-circle-check text-green-500 text-2xl"></i>
-                                <h3 class="font-extrabold text-green-800 text-lg tracking-wide">พบข้อมูลการลงทะเบียน</h3>
-                            </div>
-                            <div class="p-6 sm:p-8 space-y-5">
-                                <div>
-                                    <p class="text-[11px] text-gray-500 uppercase tracking-wider font-bold mb-1">ชื่อ - นามสกุล</p>
-                                    <p id="resultName" class="text-gray-800 font-bold text-xl">-</p>
-                                </div>
-                                
-                                <!-- เพิ่มส่วนแสดงที่อยู่ -->
-                                <div>
-                                    <p class="text-[11px] text-gray-500 uppercase tracking-wider font-bold mb-1">ที่อยู่สำหรับจัดส่ง</p>
-                                    <p id="resultAddress" class="text-gray-800 font-medium text-sm leading-relaxed">-</p>
-                                </div>
-
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
-                                        <p class="text-[11px] text-gray-500 uppercase tracking-wider font-bold mb-1">แอร์ที่ติดตั้ง</p>
-                                        <p id="resultAC" class="text-carrier-dark font-bold text-base flex items-center gap-2">
-                                            <i class="fa-solid fa-snowflake text-carrier-blue"></i> <span>-</span>
-                                        </p>
-                                    </div>
-                                    <div class="bg-gradient-to-br from-carrier-goldlight/50 to-white p-4 rounded-xl border border-carrier-gold">
-                                        <p class="text-[11px] text-carrier-dark uppercase tracking-wider font-bold mb-1 flex items-center gap-1.5"><i class="fa-solid fa-crown text-carrier-gold"></i> ทายผลทีมแชมป์</p>
-                                        <p id="resultTeam" class="text-carrier-dark font-extrabold text-xl flex items-center gap-3 mt-1">-</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="checkNotFound" class="hidden bg-red-50 border border-red-100 rounded-2xl p-8 text-center transform transition-all duration-300 shadow-md">
-                            <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-white text-red-500 mb-4 shadow-sm border border-red-100">
-                                <i class="fa-solid fa-xmark text-2xl"></i>
-                            </div>
-                            <h3 class="font-extrabold text-red-800 text-lg mb-1 tracking-wide">ไม่พบข้อมูล</h3>
-                            <p class="text-sm text-red-600/90 font-medium">เบอร์โทรศัพท์นี้ยังไม่ได้ทายผล หรือกรอกผิดพลาด</p>
-                            <button type="button" onclick="switchTab('form')" class="mt-5 text-sm font-bold text-carrier-blue hover:text-carrier-dark hover:underline flex items-center justify-center gap-1 mx-auto">
-                                <i class="fa-solid fa-arrow-left"></i> กลับไปหน้าลงทะเบียน
-                            </button>
-                        </div>
-
+                    <!-- Notification Area -->
+                    <div id="formStatus" class="hidden p-4 rounded-md mt-4 text-center text-sm font-medium">
+                        <!-- Messages will be injected here -->
                     </div>
-                </div>
 
+                </form>
             </div>
+
         </div>
         
-        <div class="text-center mt-8 text-xs text-gray-600 font-medium tracking-wide">
-            &copy; B.GRIMM CARRIER (THAILAND) LIMITED.
+        <!-- Footer -->
+        <div class="bg-gray-100 text-center py-4 text-gray-500 text-sm border-t">
+            &copy; 2026 Carrier Thailand. All rights reserved.
         </div>
-    </main>
+    </div>
 
     <script>
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbziXLLVizC05Iq5KF93kyqO9hHs2sAFAbcPvpSz1dvPRvJwBzz9XHWCIlz0UAf8cP53/exec';
-
-        const wcTeams = [
-            { name: "กาตาร์", code: "qa" }, { name: "เกาหลีใต้", code: "kr" }, { name: "จอร์แดน", code: "jo" }, { name: "ซาอุดีอาระเบีย", code: "sa" }, { name: "ญี่ปุ่น", code: "jp" }, { name: "ออสเตรเลีย", code: "au" }, { name: "อิรัก", code: "iq" }, { name: "อิหร่าน", code: "ir" }, { name: "อุซเบกิสถาน", code: "uz" },
-            { name: "เนเธอร์แลนด์", code: "nl" }, { name: "บอสเนียและเฮอร์เซโกวีนา", code: "ba" }, { name: "เบลเยียม", code: "be" }, { name: "โปรตุเกส", code: "pt" }, { name: "ฝรั่งเศส", code: "fr" }, { name: "เยอรมนี", code: "de" }, { name: "สกอตแลนด์", code: "gb-sct" }, { name: "สเปน", code: "es" }, { name: "สวิตเซอร์แลนด์", code: "ch" }, { name: "สวีเดน", code: "se" }, { name: "สาธารณรัฐเช็ก", code: "cz" }, { name: "อังกฤษ", code: "gb-eng" }, { name: "ออสเตรีย", code: "at" }, { name: "โครเอเชีย", code: "hr" }, { name: "ตุรกี", code: "tr" }, { name: "นอร์เวย์", code: "no" },
-            { name: "โคลอมเบีย", code: "co" }, { name: "บราซิล", code: "br" }, { name: "ปารากวัย", code: "py" }, { name: "อาร์เจนตินา", code: "ar" }, { name: "อุรุกวัย", code: "uy" }, { name: "เอกวาดอร์", code: "ec" },
-            { name: "กานา", code: "gh" }, { name: "กาบูเวร์ดี", code: "cv" }, { name: "สาธารณรัฐประชาธิปไตยคองโก", code: "cd" }, { name: "ตูนิเซีย", code: "tn" }, { name: "โมร็อกโก", code: "ma" }, { name: "เซเนกัล", code: "sn" }, { name: "แอฟริกาใต้", code: "za" }, { name: "แอลจีเรีย", code: "dz" }, { name: "อียิปต์", code: "eg" }, { name: "ไอวอรี่โคสต์", code: "ci" },
-            { name: "แคนาดา", code: "ca" }, { name: "เม็กซิโก", code: "mx" }, { name: "สหรัฐอเมริกา", code: "us" }, { name: "คูราเซา", code: "cw" }, { name: "ปานามา", code: "pa" }, { name: "เฮติ", code: "ht" },
-            { name: "นิวซีแลนด์", code: "nz" }
+        // 1. Populate real winners list and form dropdown
+        const winnerListEl = document.getElementById('winnerList');
+        const nameSelectEl = document.getElementById('name');
+        
+        // รายชื่อผู้โชคดี เบอร์โทร 4 ตัวท้าย และ ข้อมูลที่อยู่เดิม (จังหวัด, รหัสไปรษณีย์)
+        const winnerData = [
+            { name: 'ศรัญญู ดวงจันทร์', last4: '0611', province: 'สมุทรปราการ', zipcode: '10540' },
+            { name: 'นางสาวสันติภาพ คงเมือง', last4: '4793', province: 'พิษณุโลก', zipcode: '65000' },
+            { name: 'อมรมลตรี หาญภูเขียว', last4: '6115', province: 'กรุงเทพมหานคร', zipcode: '10520' },
+            { name: 'ปัฒณวัฒน์ พลภักดี', last4: '8994', province: 'เชียงใหม่', zipcode: '50100' },
+            { name: 'นางสาว รัตนา แก้วมุณี', last4: '1653', province: 'สงขลา', zipcode: '90110' },
+            { name: 'นาย ธงชัย เกื้อโดย', last4: '8800', province: 'นครศรีธรรมราช', zipcode: '80180' },
+            { name: 'นายดิษฐินันท์ วัฒทัน', last4: '9894', province: 'ร้อยเอ็ด', zipcode: '45000' },
+            { name: 'องอาจ เอี้ยงเอี่ยม', last4: '1913', province: 'สุโขทัย', zipcode: '64190' },
+            { name: 'วันชัย วงสมิง', last4: '6103', province: 'ปทุมธานี', zipcode: '12140' },
+            { name: 'นาย เรวัตร น้อยดี', last4: '3140', province: 'พระนครศรีอยุธยา', zipcode: '13160' },
+            { name: 'ธัชกรณ์ กล่ำพลบ', last4: '6294', province: 'กรุงเทพมหานคร', zipcode: '10510' },
+            { name: 'จักรพันธ์ หนูดี', last4: '7822', province: 'สุราษฎร์ธานี', zipcode: '84120' },
+            { name: 'พงศ์พล เสวกพรหม', last4: '1193', province: 'กรุงเทพมหานคร', zipcode: '10150' },
+            { name: 'นาย พรศักดิ์ แสนศิริ', last4: '0776', province: 'นนทบุรี', zipcode: '11110' },
+            { name: 'นาย สมพร ศรีเมือง', last4: '5811', province: 'ชลบุรี', zipcode: '20150' },
+            { name: 'ณัฐวุฒิ ทองอุ่น', last4: '8968', province: 'ปทุมธานี', zipcode: '12150' },
+            { name: 'ดนุพล สุภาพ', last4: '2376', province: 'ราชบุรี', zipcode: '70110' },
+            { name: 'นาย ธนัช สมชื่อ', last4: '7329', province: 'กรุงเทพมหานคร', zipcode: '10700' },
+            { name: 'นาย.ยศพัทธ์ ยันตศรี', last4: '9098', province: 'ชลบุรี', zipcode: '20150' },
+            { name: 'อำนวย บุญนาค', last4: '7254', province: 'กรุงเทพมหานคร', zipcode: '10510' },
+            { name: 'สิรัชประกรณ์ ศรีสิทธิ์', last4: '5992', province: 'ขอนแก่น', zipcode: '40000' },
+            { name: 'พิชาพัทธ์ อุทก', last4: '7398', province: 'ระยอง', zipcode: '21180' },
+            { name: 'ชัชวาล ศรศักดิ์', last4: '2287', province: 'สุราษฎร์ธานี', zipcode: '84310' },
+            { name: 'ธีระพงษ์ กิติพงษ์', last4: '2272', province: 'กรุงเทพมหานคร', zipcode: '10700' },
+            { name: 'นาย พีระพล จังหวะเลิศ', last4: '8313', province: 'กรุงเทพมหานคร', zipcode: '10600' },
+            { name: 'กฤตนัย ทาเงิน', last4: '1400', province: 'นครราชสีมา', zipcode: '30310' },
+            { name: 'นาย กฤตนัย ทาเงิน', last4: '7733', province: 'นครราชสีมา', zipcode: '30310' },
+            { name: 'นางสาว เพียงพิไล แอสุข', last4: '7515', province: 'เชียงใหม่', zipcode: '50190' },
+            { name: 'ปัณณทัต แสงเขียว', last4: '3476', province: 'สมุทรสงคราม', zipcode: '75120' },
+            { name: 'วิชาญ ศรีธนู', last4: '8620', province: 'พิษณุโลก', zipcode: '65130' },
+            { name: 'นายศักดิ์มงคล สมอาด', last4: '6725', province: 'ร้อยเอ็ด', zipcode: '45000' },
+            { name: 'นายพิทักษ์ อ่อนสี', last4: '2001', province: 'ร้อยเอ็ด', zipcode: '45000' },
+            { name: 'นาย ภาคภูมิ อ้นแจ่ม', last4: '6383', province: 'กรุงเทพมหานคร', zipcode: '10250' },
+            { name: 'นาย ภูวนัย บัวรสสัก', last4: '8182', province: 'เชียงใหม่', zipcode: '50130' },
+            { name: 'นาย สมพงษ์ แก่นโพธิ์', last4: '2193', province: 'นครราชสีมา', zipcode: '30000' },
+            { name: 'น.ส.ลัดดาสิริ เพิ่มพรม', last4: '1602', province: 'พิจิตร', zipcode: '66230' },
+            { name: 'เฉลิมชัย รัตนโสภาจิรสิน', last4: '4465', province: 'สมุทรปราการ', zipcode: '10270' },
+            { name: 'มานิตย์ พวงศรี', last4: '9739', province: 'กรุงเทพมหานคร', zipcode: '10160' },
+            { name: 'นายสมเกียรติ จารุเรืองไพศาล', last4: '2635', province: 'กาญจนบุรี', zipcode: '71170' },
+            { name: 'นาย นพพร คำอินทร์', last4: '1592', province: 'นนทบุรี', zipcode: '11150' },
+            { name: 'นายปรีชา ธรรมประดิษฐ์', last4: '5291', province: 'ชลบุรี', zipcode: '20150' },
+            { name: 'ธนพล กิ่งแก้วเพชร', last4: '8871', province: 'เชียงใหม่', zipcode: '50130' },
+            { name: 'ไชยภูมิ คชเฉลียง', last4: '5684', province: 'พระนครศรีอยุธยา', zipcode: '13000' },
+            { name: 'ปิรัฐติพงศ์ นวลประภาย', last4: '5132', province: 'ปราจีนบุรี', zipcode: '25220' },
+            { name: 'นายประสงค์ สวัสดิ์ดิเรกศาล', last4: '1114', province: 'พิษณุโลก', zipcode: '65000' },
+            { name: 'นายสวัสดิ์ เหล็กหมาด', last4: '8619', province: 'สงขลา', zipcode: '90110' },
+            { name: 'ทนงค์ ปรีชาวาท', last4: '5330', province: 'นครศรีธรรมราช', zipcode: '80120' },
+            { name: 'กฤษณะ เศรษฐจันทร์', last4: '5901', province: 'ชลบุรี', zipcode: '20240' },
+            { name: 'นาย สิงณรงค์ ไชยชนะ', last4: '3944', province: 'นครศรีธรรมราช', zipcode: '80120' }
         ];
-
-        // --- Gift Vote Logic ---
-        function openGiftModal() {
-            const modal = document.getElementById('giftModal');
-            const content = document.getElementById('giftModalContent');
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                content.classList.remove('scale-95');
-                content.classList.add('scale-100');
-            }, 10);
-        }
-
-        function closeGiftModal() {
-            const modal = document.getElementById('giftModal');
-            const content = document.getElementById('giftModalContent');
-            content.classList.remove('scale-100');
-            content.classList.add('scale-95');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
-        }
-
-        function submitGiftChoice(choice) {
-            closeGiftModal();
-            showToast("กำลังส่งข้อมูลการโหวต...", "info");
+        
+        winnerData.forEach((winner, index) => {
+            const rank = index + 1;
+            const name = winner.name;
             
-            const payload = new URLSearchParams();
-            payload.append('action', 'vote_gift');
-            payload.append('choice', choice);
-
-            fetch(APPS_SCRIPT_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: payload
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    showToast(`ขอบคุณที่โหวต "${choice}" ครับ! 🎉`, 'success');
-                    document.getElementById('floatingGiftBox').style.display = 'none'; // ซ่อนกล่องของขวัญ
-                } else {
-                    showToast("ไม่สามารถส่งข้อมูลได้ กรุณาลองใหม่", "error");
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showToast("เกิดข้อผิดพลาดในการเชื่อมต่อ", "error");
-            });
-        }
-        // -----------------------
-
-        const teamInput = document.getElementById('inputTeam');
-        const teamSuggestions = document.getElementById('teamSuggestions');
-        const flagIcon = document.getElementById('flagIcon');
-
-        function renderTeamSuggestions(query = '') {
-            if (!teamSuggestions) return;
-            teamSuggestions.innerHTML = '';
-            const results = wcTeams.filter(team => team.name.toLowerCase().includes(query.toLowerCase()));
+            // --- สร้างรายชื่อแสดงในกล่องรายชื่อ ---
+            const li = document.createElement('li');
+            li.className = "flex justify-between items-center py-2 border-b border-gray-100 last:border-0";
             
-            if (results.length > 0) {
-                teamSuggestions.classList.remove('hidden');
-                results.forEach(team => {
-                    const li = document.createElement('li');
-                    li.className = 'px-4 py-3 hover:bg-blue-50 cursor-pointer border-b border-gray-100 last:border-0 flex items-center gap-3 transition-colors';
-                    const highlightedName = query ? team.name.replace(new RegExp(`(${query})`, "gi"), "<span class='text-carrier-blue font-bold'>$1</span>") : team.name;
+            // กำหนดป้ายรางวัล
+            let prizeBadge = '';
+            if (rank === 1) prizeBadge = '<span class="text-xs bg-yellow-100 text-yellow-800 py-1 px-2 rounded-full font-semibold">รางวัลที่ 1</span>';
+            else if (rank === 2) prizeBadge = '<span class="text-xs bg-gray-200 text-gray-800 py-1 px-2 rounded-full font-semibold">รางวัลที่ 2</span>';
+            else if (rank === 3) prizeBadge = '<span class="text-xs bg-orange-100 text-orange-800 py-1 px-2 rounded-full font-semibold">รางวัลที่ 3</span>';
+            
+            li.innerHTML = `
+                <span><span class="font-medium text-gray-500 w-8 inline-block">${rank}.</span> ${name}</span>
+                ${prizeBadge}
+            `;
+            winnerListEl.appendChild(li);
 
-                    li.innerHTML = `
-                        <img src="https://flagcdn.com/w40/${team.code}.png" alt="${team.name} flag" class="w-8 h-5 rounded-sm shadow-sm object-cover border border-gray-200">
-                        <span class="text-gray-800 font-bold text-base">${highlightedName}</span>
-                    `;
-                    li.addEventListener('click', () => {
-                        teamInput.value = team.name;
-                        teamSuggestions.classList.add('hidden');
-                        flagIcon.innerHTML = `<img src="https://flagcdn.com/w40/${team.code}.png" class="w-full h-full object-cover" alt="flag">`;
-                    });
-                    teamSuggestions.appendChild(li);
-                });
+            // --- สร้างตัวเลือก (Option) สำหรับ Dropdown ในฟอร์ม ---
+            const option = document.createElement('option');
+            option.value = name;
+            option.textContent = `${rank}. ${name}`;
+            nameSelectEl.appendChild(option);
+        });
+
+        // --- เพิ่ม Event Listener สำหรับดึงข้อมูลที่อยู่มาโชว์เมื่อเลือกชื่อ ---
+        nameSelectEl.addEventListener('change', function() {
+            const selectedName = this.value;
+            const winnerInfo = winnerData.find(w => w.name === selectedName);
+            
+            if (winnerInfo) {
+                // แสดงกรอบข้อมูลที่อยู่
+                document.getElementById('addressDisplaySection').classList.remove('hidden');
+                // ดึงข้อมูลมาใส่
+                document.getElementById('displayProvince').value = winnerInfo.province;
+                document.getElementById('displayZipcode').value = winnerInfo.zipcode;
             } else {
-                teamSuggestions.classList.add('hidden');
-            }
-        }
-
-        if (teamInput) {
-            teamInput.addEventListener('focus', () => renderTeamSuggestions(teamInput.value));
-            teamInput.addEventListener('input', function() {
-                renderTeamSuggestions(this.value.trim());
-                const exactMatch = wcTeams.find(t => t.name === this.value.trim());
-                if (exactMatch) {
-                    flagIcon.innerHTML = `<img src="https://flagcdn.com/w40/${exactMatch.code}.png" class="w-full h-full object-cover" alt="flag">`;
-                } else {
-                    flagIcon.innerHTML = `<i class="fa-solid fa-globe text-gray-400 text-xs"></i>`;
-                }
-            });
-        }
-
-        document.addEventListener('click', function(e) {
-            if (teamInput && teamSuggestions && e.target !== teamInput && !teamSuggestions.contains(e.target)) {
-                teamSuggestions.classList.add('hidden');
+                document.getElementById('addressDisplaySection').classList.add('hidden');
             }
         });
 
-        function showToast(message, type = 'success') {
-            const container = document.getElementById('toast-container');
-            if (!container) return;
-            const toast = document.createElement('div');
-            const styles = type === 'success' 
-                ? { bg: 'bg-white', border: 'border-l-4 border-green-500', icon: 'fa-check-circle text-green-500' }
-                : (type === 'error' ? { bg: 'bg-white', border: 'border-l-4 border-red-500', icon: 'fa-triangle-exclamation text-red-500' } 
-                                    : { bg: 'bg-white', border: 'border-l-4 border-carrier-blue', icon: 'fa-info-circle text-carrier-blue' });
-
-            toast.className = `flex items-center gap-3 px-5 py-4 rounded-xl shadow-2xl transform transition-all duration-300 translate-y-10 opacity-0 ${styles.bg} ${styles.border}`;
-            toast.innerHTML = `<i class="fa-solid ${styles.icon} text-xl"></i><p class="text-gray-800 font-bold text-sm flex-1 tracking-wide">${message}</p>`;
-            container.appendChild(toast);
+        // --- เพิ่ม Event Listener สำหรับ Checkbox แก้ไขที่อยู่ ---
+        document.getElementById('editAddressCb').addEventListener('change', function() {
+            const newAddressSection = document.getElementById('newAddressSection');
+            const newAddressInput = document.getElementById('newAddress');
             
-            setTimeout(() => toast.classList.remove('translate-y-10', 'opacity-0'), 10);
-            setTimeout(() => { toast.classList.add('opacity-0'); setTimeout(() => toast.remove(), 300); }, 4500);
-        }
-
-        window.switchTab = function(tab) {
-            const formView = document.getElementById('view-form');
-            const checkView = document.getElementById('view-check');
-            const tabForm = document.getElementById('tab-form');
-            const tabCheck = document.getElementById('tab-check');
-            
-            document.getElementById('checkResult').classList.add('hidden');
-            document.getElementById('checkNotFound').classList.add('hidden');
-            document.getElementById('inputCheckPhone').value = '';
-
-            if (tab === 'form') {
-                formView.classList.remove('hidden'); checkView.classList.add('hidden');
-                tabForm.classList.add('nav-active'); tabForm.classList.remove('text-gray-500', 'border-transparent', 'hover:text-carrier-blue', 'hover:bg-gray-50');
-                tabCheck.classList.remove('nav-active'); tabCheck.classList.add('text-gray-500', 'border-transparent', 'hover:text-carrier-blue', 'hover:bg-gray-50');
+            if (this.checked) {
+                // ถ้าติ๊กแก้ไข ให้โชว์ช่องกรอกที่อยู่ใหม่ และบังคับต้องกรอก
+                newAddressSection.classList.remove('hidden');
+                newAddressInput.required = true;
             } else {
-                formView.classList.add('hidden'); checkView.classList.remove('hidden');
-                tabCheck.classList.add('nav-active'); tabCheck.classList.remove('text-gray-500', 'border-transparent', 'hover:text-carrier-blue', 'hover:bg-gray-50');
-                tabForm.classList.remove('nav-active'); tabForm.classList.add('text-gray-500', 'border-transparent', 'hover:text-carrier-blue', 'hover:bg-gray-50');
-                setTimeout(() => document.getElementById('inputCheckPhone').focus(), 100);
+                // ถ้าเอาติ๊กออก ให้ซ่อน และไม่ต้องบังคับกรอก
+                newAddressSection.classList.add('hidden');
+                newAddressInput.required = false;
+                newAddressInput.value = ''; // เคลียร์ค่าทิ้ง
             }
-        }
+        });
 
-        window.handleCheckSubmit = function(e) {
+        // 2. Handle Form Submission
+        document.getElementById('shippingForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const phone = document.getElementById('inputCheckPhone').value.trim();
-            const resultBox = document.getElementById('checkResult');
-            const notFoundBox = document.getElementById('checkNotFound');
-            const submitBtn = e.target.querySelector('button[type="submit"]');
-            const originalBtnHtml = submitBtn.innerHTML;
             
-            if (!/^[0-9]{10}$/.test(phone)) {
-                showToast("กรุณากรอกเบอร์โทรศัพท์ให้ครบ 10 หลัก", "error");
-                document.getElementById('inputCheckPhone').focus();
+            const form = this;
+            const btn = document.getElementById('submitBtn');
+            const btnText = btn.querySelector('span');
+            const spinner = document.getElementById('loadingSpinner');
+            const statusDiv = document.getElementById('formStatus');
+            
+            // --- ตรวจสอบยืนยันตัวตนจากเบอร์ 4 ตัวท้าย ---
+            const selectedName = document.getElementById('name').value;
+            const verifyInput = document.getElementById('verifyPhone').value;
+            
+            // ค้นหาข้อมูลของคนๆ นั้นจาก Array
+            const winnerInfo = winnerData.find(w => w.name === selectedName);
+            const correctLast4 = winnerInfo ? winnerInfo.last4 : '';
+
+            // ถ้ารหัสเป็น 'XXXX' ให้ข้ามการตรวจสอบไปก่อน (เผื่อยังอัปเดตไฟล์ไม่เสร็จ)
+            if (correctLast4 !== 'XXXX' && verifyInput !== correctLast4) {
+                statusDiv.innerHTML = '❌ <b>ยืนยันตัวตนไม่สำเร็จ:</b> เบอร์โทรศัพท์ 4 ตัวท้ายไม่ตรงกับที่ลงทะเบียนไว้ กรุณาตรวจสอบอีกครั้ง';
+                statusDiv.className = 'p-4 rounded-md mt-4 text-center text-sm font-medium bg-red-50 text-red-800 border border-red-200 block';
+                
+                // กระพริบช่องกรอกสีแดงเพื่อเตือน
+                document.getElementById('verifyPhone').classList.add('border-red-500', 'bg-red-50');
+                setTimeout(() => {
+                    document.getElementById('verifyPhone').classList.remove('border-red-500', 'bg-red-50');
+                }, 2000);
+                
+                return; // หยุดการทำงาน ไม่ส่งข้อมูลให้ Google Sheet
+            }
+            // ------------------------------------------
+
+            // Update UI to loading state
+            btn.disabled = true;
+            btnText.innerText = 'กำลังส่งข้อมูล...';
+            spinner.classList.remove('hidden');
+            statusDiv.className = 'hidden p-4 rounded-md mt-4 text-center text-sm font-medium'; // Reset status
+
+            const formData = new FormData(form);
+
+            // =====================================================================
+            // 🔴 สำคัญ: นำ Web App URL ที่ได้จาก Google Apps Script มาใส่ตรงนี้
+            // =====================================================================
+            // ตัวอย่าง URL: 'https://script.google.com/macros/s/AKfycb.../exec'
+            const scriptURL = 'https://script.google.com/macros/s/AKfycby-8j97XPdwuJjAQNJaV-GGxw11t9XjS0ViYRKTh3l-pLnjcu333wI_GLvceqwu_V-d/exec'; 
+            
+            // For Preview purposes only: Simulate network request if URL is not set
+            if(scriptURL === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE') {
+                setTimeout(() => {
+                    showSuccess();
+                }, 1500);
                 return;
             }
 
-            resultBox.classList.add('hidden');
-            notFoundBox.classList.add('hidden');
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> กำลังค้นหา...';
-
-            const payload = new URLSearchParams();
-            payload.append('action', 'check');
-            payload.append('phone', phone);
-
-            fetch(APPS_SCRIPT_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: payload
+            fetch(scriptURL, { 
+                method: 'POST', 
+                body: formData,
+                mode: 'no-cors' // Important for Google Apps Script to prevent CORS errors on basic POST
             })
-            .then(response => { if (!response.ok) throw new Error('Network error'); return response.json(); })
-            .then(data => {
-                if (data.status === 'found') {
-                    const userRecord = data.data;
-                    const validTeam = wcTeams.find(t => t.name === userRecord.team);
-                    const teamCode = validTeam ? validTeam.code : 'th'; 
-
-                    notFoundBox.classList.add('hidden');
-                    resultBox.classList.remove('hidden');
-                    
-                    document.getElementById('resultName').innerText = userRecord.name;
-                    // อัปเดตข้อมูลที่อยู่
-                    document.getElementById('resultAddress').innerText = userRecord.address || '-';
-                    document.getElementById('resultAC').innerHTML = `<i class="fa-solid fa-snowflake text-carrier-blue"></i> <span>${userRecord.ac}</span>`;
-                    document.getElementById('resultTeam').innerHTML = `
-                        <img src="https://flagcdn.com/w40/${teamCode}.png" class="w-10 h-6 rounded shadow-sm object-cover border border-gray-200" alt="flag">
-                        <span>${userRecord.team}</span>
-                    `;
-                } else {
-                    resultBox.classList.add('hidden');
-                    notFoundBox.classList.remove('hidden');
-                }
+            .then(response => {
+                // Since no-cors is used, we won't get a meaningful response back, 
+                // but if the promise resolves, we assume success.
+                showSuccess();
             })
             .catch(error => {
-                console.error('Error:', error);
-                showToast("ระบบขัดข้อง ไม่สามารถตรวจสอบสิทธิ์ได้ในขณะนี้", "error");
-            })
-            .finally(() => {
-                submitBtn.disabled = false; submitBtn.innerHTML = originalBtnHtml;
+                showError();
             });
-        }
 
-        window.handleFormSubmit = function(e) {
-            e.preventDefault();
-            const phone = document.getElementById('inputPhone').value.trim();
-
-            if (!/^[0-9]{10}$/.test(phone)) {
-                showToast("กรุณากรอกเบอร์โทรศัพท์ให้ครบ 10 หลัก", "error");
-                document.getElementById('inputPhone').focus(); return;
+            // Helper function to handle successful UI update
+            function showSuccess() {
+                statusDiv.innerHTML = '✅ ส่งข้อมูลสำเร็จ! ทางเราจะรีบจัดส่งของรางวัลให้ท่านครับ';
+                statusDiv.className = 'p-4 rounded-md mt-4 text-center text-sm font-medium bg-green-50 text-green-800 border border-green-200 block';
+                form.reset();
+                resetBtn();
             }
 
-            const addrDetail = document.getElementById('inputAddressDetail').value.trim();
-            const tambon = document.getElementById('inputTambon').value.trim();
-            const amphoe = document.getElementById('inputAmphoe').value.trim();
-            const province = document.getElementById('inputProvince').value.trim();
-            const zipcode = document.getElementById('inputZipcode').value.trim();
-
-            const fullAddress = `${addrDetail} ต.${tambon} อ.${amphoe} จ.${province} ${zipcode}`;
-            const name = document.getElementById('inputName').value.trim();
-            const ac = document.getElementById('inputAC').value;
-            const team = document.getElementById('inputTeam').value.trim();
-
-            const validTeam = wcTeams.find(t => t.name === team);
-            if (!validTeam) {
-                showToast("กรุณาเลือกทีมฟุตบอลจากรายการที่ระบบแนะนำเท่านั้น", "error");
-                document.getElementById('inputTeam').focus(); return;
+            // Helper function to handle error UI update
+            function showError() {
+                statusDiv.innerHTML = '❌ เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง หรือติดต่อแอดมิน';
+                statusDiv.className = 'p-4 rounded-md mt-4 text-center text-sm font-medium bg-red-50 text-red-800 border border-red-200 block';
+                resetBtn();
             }
 
-            const payload = new URLSearchParams();
-            payload.append('action', 'register');
-            payload.append('name', name); payload.append('phone', phone);
-            payload.append('address', fullAddress); payload.append('ac', ac); payload.append('team', team);
-
-            const submitBtn = document.getElementById('submitBtn');
-            const submitBtnText = document.getElementById('submitBtnText');
-            const submitSpinner = document.getElementById('submitSpinner');
-            
-            submitBtn.disabled = true; submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
-            submitBtnText.classList.add('hidden'); submitSpinner.classList.remove('hidden');
-
-            fetch(APPS_SCRIPT_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: payload
-            })
-            .then(response => { if (!response.ok) throw new Error('Network error'); return response.json(); })
-            .then(data => {
-                if (data.status === 'error' && data.message === 'duplicate') {
-                    showToast("คุณได้ใช้เบอร์โทรศัพท์นี้ทายผลไปแล้ว! (1 เบอร์ / 1 สิทธิ์)", "error");
-                    document.getElementById('inputPhone').focus();
-                } else if (data.status === 'success') {
-                    showToast(`ทายผลสำเร็จ! เตรียมลุ้นแชมป์และของรางวัลได้เลย 🎉`, 'success');
-                    e.target.reset();
-                    flagIcon.innerHTML = `<i class="fa-solid fa-globe text-gray-400 text-xs"></i>`;
-                    setTimeout(() => {
-                        switchTab('check');
-                        document.getElementById('inputCheckPhone').value = phone;
-                        document.getElementById('checkForm').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
-                    }, 1800);
-                } else {
-                    showToast("เกิดข้อผิดพลาดจากระบบ: " + (data.message || 'Unknown error'), "error");
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error); showToast("เกิดข้อผิดพลาดในการเชื่อมต่อ กรุณาลองใหม่อีกครั้ง", "error");
-            })
-            .finally(() => {
-                submitBtn.disabled = false; submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
-                submitBtnText.classList.remove('hidden'); submitSpinner.classList.add('hidden');
-            });
-        }
+            // Helper function to reset button state
+            function resetBtn() {
+                btnText.innerText = 'ยืนยันและส่งข้อมูล';
+                spinner.classList.add('hidden');
+                btn.disabled = false;
+            }
+        });
     </script>
 </body>
 </html>
